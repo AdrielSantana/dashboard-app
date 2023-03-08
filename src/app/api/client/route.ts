@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 
-import db from "@/utils/db";
+import connectDb from "@/server/utils/connectDb";
 
 export async function GET(request: Request) {
-  console.log("connecting to db");
-  const logs = await db.collection("logs").find().toArray();
-  console.log("connected to db");
+  await connectDb();
 
-  return NextResponse.json(logs);
+  return NextResponse.json({ success: true });
 }

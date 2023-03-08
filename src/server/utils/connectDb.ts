@@ -10,5 +10,15 @@ if (!process.env.DB_NAME) {
 
 const url = process.env.MONGO_URL;
 const client = new MongoClient(url);
-client.connect();
-export default client.db(process.env.DB_NAME);
+
+const connectDb = async () => {
+  try {
+    console.log("connecting to db");
+    await client.connect();
+    console.log("connected to db");
+  } catch (error) {
+    console.log(`Error trying to connect to db: ${error}`);
+  }
+};
+
+export default connectDb;

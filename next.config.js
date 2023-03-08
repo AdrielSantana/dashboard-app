@@ -3,9 +3,13 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  webpack: (config) => {
-    config.experiments = { ...config.experiments, topLevelAwait: true };
-    return config;
+  async rewrites() {
+    return [
+      {
+        source: "/",
+        destination: "/dashboard",
+      },
+    ];
   },
 };
 

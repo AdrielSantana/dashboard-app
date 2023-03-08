@@ -1,32 +1,30 @@
-import type { Metadata } from "next";
+"use client";
+import { usePathname } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Dashboard App",
-  description: "Just a Dashboard App",
-  applicationName: "Dashboard App",
-  creator: "Adriel Santana",
-  colorScheme: "light",
-  icons: {
-    icon: [
-      "/favicon/icon.png",
-      "favicon/favicon-32x32.png",
-      "favicon/favicon-16x16.png",
-    ],
-    apple: "/favicon/apple-touch-icon.png",
-  },
-  manifest: "/favicon/site.webmanifest",
-};
+import { CacheProvider } from "@chakra-ui/next-js";
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "@/client/assets/theme";
+
+import { checkIsPublicRoute } from "@/client/functions/check-is-public-route";
+import PrincipalLayout from "@/client/components/layout/PrincipalLayout";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const isPublicPage = checkIsPublicRoute(pathname);
+
   return (
-    <html lang="pt-br">
-      <body>
-        <h1>Layout</h1>
-        {children}
+    <html style={{ height: "100%" }} lang="pt-br">
+      <head />
+      <body style={{ height: "100%" }}>
+        <CacheProvider>
+          <ChakraProvider theme={theme}>
+            <PrincipalLayout>{children}</PrincipalLayout>
+          </ChakraProvider>
+        </CacheProvider>
       </body>
     </html>
   );
