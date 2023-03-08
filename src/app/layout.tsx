@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Just a Dashboard App",
   applicationName: "Dashboard App",
   creator: "Adriel Santana",
-  colorScheme: "dark",
+  colorScheme: "light",
   icons: {
     icon: [
       "/favicon/icon.png",
