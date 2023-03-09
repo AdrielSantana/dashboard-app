@@ -9,12 +9,12 @@ const Dashboard = () => {
   return (
     <>
       <Flex direction="column" gap={5}>
-        <Heading>Page</Heading>
+        <Heading>Dashboard</Heading>
         <Heading>{bears}</Heading>
-        <Button colorScheme="purple" onClick={(e) => increase(2)}>
+        <Button w="200px" colorScheme="teal" onClick={(e) => increase(2)}>
           Total bears
         </Button>
-        <Button colorScheme="purple" onClick={toggleColorMode}>
+        <Button w="200px" colorScheme="teal" onClick={toggleColorMode}>
           Toggle {colorMode === "light" ? "Dark" : "Light"}
         </Button>
       </Flex>

@@ -6,7 +6,6 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "@/client/assets/theme";
 
 import { checkIsPublicRoute } from "@/client/functions/check-is-public-route";
-import PrincipalLayout from "@/client/components/layout/PrincipalLayout";
 
 export default function RootLayout({
   children,
@@ -21,9 +20,7 @@ export default function RootLayout({
       <head />
       <body style={{ height: "100%" }}>
         <CacheProvider>
-          <ChakraProvider theme={theme}>
-            <PrincipalLayout>{children}</PrincipalLayout>
-          </ChakraProvider>
+          <ChakraProvider theme={theme}>{children}</ChakraProvider>
         </CacheProvider>
       </body>
     </html>
