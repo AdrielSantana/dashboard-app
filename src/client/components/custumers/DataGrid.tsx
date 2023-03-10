@@ -35,8 +35,8 @@ const DataGrid = ({ data, collums }: Props) => {
   const itemsTotal = data.length;
   const lastTablePage = Math.ceil(itemsTotal / maxItemsPerPage);
   const dataToShow = data.slice(
-    maxItemsPerPage * (tablePage - 1) + 1,
-    maxItemsPerPage * tablePage + 1
+    maxItemsPerPage * (tablePage - 1),
+    maxItemsPerPage * tablePage - 1
   );
 
   const handleChangeTablePage = (jump: number) => {
