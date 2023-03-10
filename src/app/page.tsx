@@ -1,14 +1,15 @@
 "use client";
 
-import { Link } from "@chakra-ui/next-js";
-import { Button, Flex, useColorModeValue } from "@chakra-ui/react";
+import useColors from "@/client/assets/useColors";
+import { Button, Flex } from "@chakra-ui/react";
+import Link from "next/link";
 
 const DashboardPage = () => {
-  const bg = useColorModeValue("gray.200", "gray.700");
+  const { bgColor } = useColors();
 
   return (
     <Flex
-      backgroundColor={bg}
+      backgroundColor={bgColor}
       height="100%"
       alignItems="center"
       justifyContent="center"

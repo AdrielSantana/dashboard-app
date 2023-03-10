@@ -1,21 +1,7 @@
 "use client";
-import { Dispatch, SetStateAction, useState } from "react";
-import {
-  MoonIcon,
-  SunIcon,
-  HamburgerIcon,
-  SettingsIcon,
-} from "@chakra-ui/icons";
-import {
-  Flex,
-  HStack,
-  IconButton,
-  Spacer,
-  useColorMode,
-} from "@chakra-ui/react";
-import Profile from "./Profile";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { Flex, HStack, IconButton, Spacer } from "@chakra-ui/react";
 import SearchBar from "./SearchBar";
-import ProfileMenu from "./ProfileMenu";
 import UserOptions from "./UserOptions";
 
 type Props = {

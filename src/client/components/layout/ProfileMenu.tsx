@@ -19,11 +19,8 @@ const ProfileMenu = () => {
           icon={<ChevronDownIcon boxSize={7} />}
         />
         <MenuList>
-          <MenuItem>Download</MenuItem>
-          <MenuItem>Create a Copy</MenuItem>
-          <MenuItem>Mark as Draft</MenuItem>
-          <MenuItem>Delete</MenuItem>
-          <MenuItem>Attend a Workshop</MenuItem>
+          <MenuItem>Perfil</MenuItem>
+          <MenuItem>Sair</MenuItem>
         </MenuList>
       </Menu>
     </>

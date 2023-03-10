@@ -9,16 +9,16 @@ if (!process.env.DB_NAME) {
 }
 
 const url = process.env.MONGO_URL;
+const dbName = process.env.DB_NAME;
 const client = new MongoClient(url);
 
-const connectDb = async () => {
-  try {
-    console.log("connecting to db");
-    await client.connect();
-    console.log("connected to db");
-  } catch (error) {
-    console.log(`Error trying to connect to db: ${error}`);
-  }
-};
+const db = client
+  .connect()
+  .then((mongo) => {
+    return mongo.db(dbName);
+  })
+  .catch((error) => {
+    throw new Error(error);
+  });
 
-export default connectDb;
+export default db;

@@ -6,6 +6,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "@/client/assets/theme";
 
 import { checkIsPublicRoute } from "@/client/functions/check-is-public-route";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/client/services/queryClient";
 
 export default function RootLayout({
   children,
@@ -19,9 +21,11 @@ export default function RootLayout({
     <html style={{ height: "100%" }} lang="pt-br">
       <head />
       <body style={{ height: "100%" }}>
-        <CacheProvider>
-          <ChakraProvider theme={theme}>{children}</ChakraProvider>
-        </CacheProvider>
+        <QueryClientProvider client={queryClient}>
+          <CacheProvider>
+            <ChakraProvider theme={theme}>{children}</ChakraProvider>
+          </CacheProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );

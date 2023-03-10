@@ -1,7 +1,20 @@
+"use client";
+import useColors from "@/client/assets/useColors";
+import { Flex, Spinner } from "@chakra-ui/react";
+
 const Loading = () => {
+  const { bgColor } = useColors();
+
   return (
     <>
-      <h1>Loading...</h1>
+      <Flex
+        bg={bgColor}
+        h={"100%"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <Spinner size="xl" />
+      </Flex>
     </>
   );
 };
