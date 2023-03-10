@@ -2,7 +2,7 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Flex, HStack, IconButton, Spacer } from "@chakra-ui/react";
 import SearchBar from "./SearchBar";
-import UserOptions from "./UserOptions";
+import UserOptions from "../profile/UserOptions";
 
 type Props = {
   onOpen: () => void;
@@ -11,14 +11,7 @@ type Props = {
 
 const Navbar = ({ onOpen, isNonMobile }: Props) => {
   return (
-    <Flex
-      px={10}
-      py={5}
-      gap={5}
-      justifyContent="center"
-      flexWrap={"wrap"}
-      width="100%"
-    >
+    <Flex py={5} gap={5} justifyContent="center" flexWrap={"wrap"} width="100%">
       <HStack gap={3}>
         <IconButton
           colorScheme="teal"

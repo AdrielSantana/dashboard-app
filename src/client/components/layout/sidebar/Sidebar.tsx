@@ -26,7 +26,7 @@ import {
 import { FaGlobeAmericas, FaCashRegister } from "react-icons/fa";
 import { RiFilePaperFill } from "react-icons/ri";
 
-import UserOptions from "./UserOptions";
+import UserOptions from "../profile/UserOptions";
 import SidebarButton from "./SidebarButton";
 import SidebarButtonGroup from "./SidebarButtonGroup";
 
