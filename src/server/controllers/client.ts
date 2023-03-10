@@ -1,6 +1,22 @@
+import { ObjectId } from "mongodb";
 import { NextRequest } from "next/server";
 import { Product } from "../models/Product";
 import { ProductStat } from "../models/ProductStat";
+import { User } from "../models/User";
+
+export const getUser = async (req: NextRequest, params: { id: string }) => {
+  try {
+    const id = params.id;
+    const convertedId = new ObjectId(id);
+    const userCollection = await User;
+    const user = await userCollection.findOne({ _id: convertedId });
+    return user;
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    }
+  }
+};
 
 export const getProducts = async () => {
   try {
@@ -25,7 +41,7 @@ export const getProducts = async () => {
   }
 };
 
-type ProductWithStatsType = {
+export type ProductWithStatsType = {
   _id: string;
   name: string;
   price: number;
@@ -54,4 +70,32 @@ type ProductWithStatsType = {
   };
 };
 
-export default ProductWithStatsType;
+export const getCustomers = async () => {
+  try {
+    const userCollection = await User;
+    const customers = await userCollection
+      .find({ role: "user" }, { projection: { password: 0 } })
+      .toArray();
+
+    return customers;
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    }
+  }
+};
+
+export type UserWithoutPassword = {
+  _id: string;
+  name: string;
+  email: string;
+  city: string | null;
+  state: string | null;
+  country: string | null;
+  occupation: string | null;
+  phoneNumber: string | null;
+  transactions: string[] | null;
+  createdAt: Date;
+  updatedAt: Date;
+  role: string;
+};

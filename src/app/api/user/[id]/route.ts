@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "@/server/controllers/general";
+import { getUser } from "@/server/controllers/client";
 
 type ParamsType = {
   id: string;

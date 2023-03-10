@@ -1,5 +1,7 @@
 import useColors from "@/client/assets/useColors";
-import ProductWithStatsType from "@/server/controllers/client";
+import useDesktopMediaQuery from "@/client/assets/useDesktopMediaQuery";
+import { convertRatingToPercentage } from "@/client/functions/covert-rating-to-percentage";
+import { ProductWithStatsType } from "@/server/controllers/client";
 import {
   Accordion,
   AccordionButton,
@@ -10,6 +12,7 @@ import {
   CircularProgress,
   CircularProgressLabel,
   Flex,
+  Spacer,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -20,16 +23,19 @@ type Props = {
 
 const ProductCard = ({ product }: Props) => {
   const { cardBgColor, bgColor, color } = useColors();
+  const { isNonMobile } = useDesktopMediaQuery();
+
+  const convertedRating = convertRatingToPercentage(product.rating);
 
   return (
     <Accordion allowToggle>
       <AccordionItem borderColor={"transparent"}>
         <Flex
           direction={"column"}
-          h={"350px"}
           justifyContent={"space-between"}
           padding="8"
-          w={"450px"}
+          h={"350px"}
+          w={isNonMobile ? "450px" : "300px"}
           boxShadow="lg"
           borderRadius={"lg"}
           bg={cardBgColor}
@@ -45,15 +51,16 @@ const ProductCard = ({ product }: Props) => {
               </Text>
             </Stack>
 
+            <Spacer />
+
             <CircularProgress
-              capIsRound
               size="70px"
               thickness="10px"
-              value={40}
+              value={convertedRating}
               color={color}
               trackColor={bgColor}
             >
-              <CircularProgressLabel>40%</CircularProgressLabel>
+              <CircularProgressLabel>{convertedRating}%</CircularProgressLabel>
             </CircularProgress>
           </Flex>
 
@@ -70,7 +77,7 @@ const ProductCard = ({ product }: Props) => {
             Ver Mais
           </AccordionButton>
         </Flex>
-        <AccordionPanel w={"450px"}>
+        <AccordionPanel w={isNonMobile ? "450px" : "300px"}>
           <Text>id: {product._id}</Text>
           <Text>Estoque: {product.supply}</Text>
           <Text>Vendas Anuais Desse Ano: {product.stat.yearlySalesTotal}</Text>

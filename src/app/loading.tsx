@@ -6,16 +6,14 @@ const Loading = () => {
   const { bgColor } = useColors();
 
   return (
-    <>
-      <Flex
-        bg={bgColor}
-        h={"100%"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <Spinner size="xl" />
-      </Flex>
-    </>
+    <Flex
+      bg={bgColor}
+      h={"100%"}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
+      <Spinner size="xl" />
+    </Flex>
   );
 };
 

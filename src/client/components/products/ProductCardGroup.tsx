@@ -1,4 +1,4 @@
-import ProductWithStatsType from "@/server/controllers/client";
+import {ProductWithStatsType} from "@/server/controllers/client";
 import { Flex } from "@chakra-ui/react";
 import React from "react";
 import ProductCard from "./ProductCard";

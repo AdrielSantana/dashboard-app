@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 const ProductsPage = () => {
-  const { page, setPage } = usePageStore();
+  const { setPage } = usePageStore();
 
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["products"],

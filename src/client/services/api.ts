@@ -1,4 +1,7 @@
-import ProductWithStatsType from "@/server/controllers/client";
+import {
+  ProductWithStatsType,
+  UserWithoutPassword,
+} from "@/server/controllers/client";
 import { UserType } from "@/server/models/User";
 
 export const fetchUser: (userId: string) => Promise<UserType> = async (
@@ -19,6 +22,17 @@ export const fetchProducts: () => Promise<
     `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/products`,
     { next: { revalidate: 30 }, method: "GET" }
   );
-  const product: ProductWithStatsType[] = await res.json();
-  return product;
+  const products: ProductWithStatsType[] = await res.json();
+  return products;
+};
+
+export const fetchCustomers: () => Promise<
+  UserWithoutPassword[]
+> = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/customers`,
+    { next: { revalidate: 30 }, method: "GET" }
+  );
+  const customers: UserWithoutPassword[] = await res.json();
+  return customers;
 };

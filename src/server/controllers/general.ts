@@ -5,20 +5,6 @@ import { dataUser, dataProduct, dataProductStat } from "../data/index";
 import { Product } from "../models/Product";
 import { ProductStat } from "../models/ProductStat";
 
-export const getUser = async (req: NextRequest, params: { id: string }) => {
-  try {
-    const id = params.id;
-    const convertedId = new ObjectId(id);
-    const userCollection = await User;
-    const user = await userCollection.findOne({ _id: convertedId });
-    return user;
-  } catch (error) {
-    if (error instanceof Error) {
-      return { error: error.message };
-    }
-  }
-};
-
 // USAR FUNÇÕES SÓ UMA VEZ PARA POVOAR BANCO
 
 export const insertUsers = async () => {

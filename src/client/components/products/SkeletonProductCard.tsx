@@ -1,4 +1,5 @@
 import useColors from "@/client/assets/useColors";
+import useDesktopMediaQuery from "@/client/assets/useDesktopMediaQuery";
 import {
   SkeletonText,
   Skeleton,
@@ -8,6 +9,7 @@ import {
 
 const SkeletonProductCard = () => {
   const { cardBgColor, bgColor, color } = useColors();
+  const { isNonMobile } = useDesktopMediaQuery();
 
   return (
     <Flex
@@ -15,7 +17,7 @@ const SkeletonProductCard = () => {
       h={"350px"}
       justifyContent={"space-between"}
       padding="8"
-      w={"450px"}
+      w={isNonMobile ? "450px" : "300px"}
       boxShadow="lg"
       borderRadius={"lg"}
       bg={cardBgColor}
@@ -30,7 +32,6 @@ const SkeletonProductCard = () => {
         />
 
         <CircularProgress
-          capIsRound
           size="70px"
           thickness="10px"
           value={40}

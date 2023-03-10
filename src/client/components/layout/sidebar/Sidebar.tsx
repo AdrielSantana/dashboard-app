@@ -1,3 +1,4 @@
+import useDesktopMediaQuery from "@/client/assets/useDesktopMediaQuery";
 import {
   Drawer,
   DrawerBody,
@@ -29,12 +30,6 @@ import { RiFilePaperFill } from "react-icons/ri";
 import UserOptions from "../profile/UserOptions";
 import SidebarButton from "./SidebarButton";
 import SidebarButtonGroup from "./SidebarButtonGroup";
-
-type Props = {
-  isNonMobile: boolean;
-  isOpen: boolean;
-  onClose: () => void;
-};
 
 const btnGroupClientFacing = [
   {
@@ -95,7 +90,14 @@ const btnGroupManagement = [
   },
 ];
 
-const Sidebar = ({ isNonMobile, isOpen, onClose }: Props) => {
+type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+const Sidebar = ({ isOpen, onClose }: Props) => {
+  const { isNonMobile } = useDesktopMediaQuery();
+
   return (
     <>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
