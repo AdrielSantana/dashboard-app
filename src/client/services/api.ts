@@ -1,5 +1,6 @@
 import {
   getCustomersResponse,
+  getTransactionsResponse,
   ProductWithStatsType,
 } from "@/server/controllers/client";
 import { UserType } from "@/server/models/User";
@@ -30,11 +31,32 @@ export const fetchCustomers: (
   page: number,
   pageSize: number,
   sort: string | null
-) => Promise<getCustomersResponse> = async (page, pageSize, sort) => {
+) => Promise<getCustomersResponse | undefined> = async (
+  page,
+  pageSize,
+  sort
+) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/customers?page=${page}&pageSize=${pageSize}&sort=${sort}`,
     { next: { revalidate: 30 }, method: "GET" }
   );
-  const customers: getCustomersResponse = await res.json();
+  const customers: getCustomersResponse | undefined = await res.json();
   return customers;
+};
+
+export const fetchTransactions: (
+  page: number,
+  pageSize: number,
+  sort: string | null
+) => Promise<getTransactionsResponse | undefined> = async (
+  page,
+  pageSize,
+  sort
+) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/transactions?page=${page}&pageSize=${pageSize}&sort=${sort}`,
+    { next: { revalidate: 30 }, method: "GET" }
+  );
+  const transactions: getTransactionsResponse | undefined = await res.json();
+  return transactions;
 };

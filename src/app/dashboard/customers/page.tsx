@@ -7,7 +7,7 @@ import Header from "@/client/components/layout/Header";
 import { fetchCustomers } from "@/client/services/api";
 import usePageStore from "@/client/state/usePageStore";
 import { Flex } from "@chakra-ui/react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 export const collums = [
@@ -41,6 +41,7 @@ export const collums = [
   {
     field: "role",
     headerName: "Função",
+    disableSort: true,
   },
 ];
 
@@ -63,7 +64,7 @@ const CustomersPage = () => {
   return (
     <Flex overflowY={"auto"} h={"100%"} pb={6} gap={"6"} direction={"column"}>
       <Header title="Clientes" subTitle="Lista de Clientes" />
-      {isSuccess && (
+      {isSuccess && data != undefined && (
         <DataGrid
           data={data.customers}
           total={data.total}
@@ -77,7 +78,7 @@ const CustomersPage = () => {
         />
       )}
       {isLoading && <DataGridSkeleton rows={10} collums={7} />}
-      {isError && <ErrorMessage />}
+      {isError || (isSuccess && data == undefined && <ErrorMessage />)}
     </Flex>
   );
 };

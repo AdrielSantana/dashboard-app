@@ -34,7 +34,8 @@ type Props = {
   collums: {
     field: string;
     headerName: string;
-    renderCell?: (params: string) => string;
+    renderCell?: (params: any) => string;
+    disableSort?: boolean;
   }[];
 
   tablePage: number;
@@ -104,6 +105,8 @@ const DataGrid = ({
               <Text fontSize={"lg"}>Itens Por Página:</Text>
 
               <RadioGroup
+                colorScheme={"teal"}
+                name={"rows-per-page"}
                 onChange={(e) => {
                   handleRadioChange(parseFloat(e));
                   console.log(parseFloat(e));
@@ -159,6 +162,7 @@ const DataGrid = ({
                   <Button
                     _hover={{ textDecoration: "none" }}
                     variant={"link"}
+                    isDisabled={collum.disableSort}
                     rightIcon={
                       sortType === collum.field ? (
                         <ChevronDownIcon boxSize={5} />

@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import { NextRequest } from "next/server";
 import { Product } from "../models/Product";
 import { ProductStat } from "../models/ProductStat";
+import { Transaction } from "../models/Transaction";
 import { User } from "../models/User";
 
 export const getUser = async (req: NextRequest, params: { id: string }) => {
@@ -76,22 +77,30 @@ export const getCustomers = async (
   sort: string | null
 ) => {
   try {
-    if (page && pageSize && sort) {
-      const userCollection = await User;
-      const customers = await userCollection
-        .find(
-          { role: "user" },
-          { projection: { password: 0 }, sort: { [sort]: 1 } }
-        )
-        .skip((page - 1) * pageSize)
-        .limit(pageSize)
-        .toArray();
-
-      const total = await userCollection.countDocuments({ role: "user" });
-
-      return { total, customers };
-    } else {
+    if (!page) {
+      page = 1;
     }
+
+    if (!pageSize) {
+      pageSize = 20;
+    }
+
+    if (!sort) {
+      sort = "_id";
+    }
+    const userCollection = await User;
+    const customers = await userCollection
+      .find(
+        { role: "user" },
+        { projection: { password: 0 }, sort: { [sort]: 1 } }
+      )
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .toArray();
+
+    const total = await userCollection.countDocuments({ role: "user" });
+
+    return { total, customers };
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message };
@@ -117,4 +126,50 @@ export type UserWithoutPassword = {
   createdAt: Date;
   updatedAt: Date;
   role: string;
+};
+
+export const getTransactions = async (
+  page: number | null,
+  pageSize: number | null,
+  sort: string | null
+) => {
+  try {
+    if (!page) {
+      page = 1;
+    }
+
+    if (!pageSize) {
+      pageSize = 20;
+    }
+
+    if (!sort) {
+      sort = "_id";
+    }
+
+    const transactionCollection = await Transaction;
+    const transactions = await transactionCollection
+      .find({}, { sort: { [sort]: 1 } })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .toArray();
+
+    const total = await transactionCollection.countDocuments({});
+
+    return { total, transactions };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    }
+  }
+};
+
+export type getTransactionsResponse = {
+  total: number;
+  transactions: {
+    userId: string;
+    cost: number;
+    products: string[];
+    createdAt: Date;
+    updatedAt: Date;
+  }[];
 };

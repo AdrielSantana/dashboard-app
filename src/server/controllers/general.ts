@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server";
 import { User } from "../models/User";
 import { ObjectId } from "mongodb";
-import { dataUser, dataProduct, dataProductStat } from "../data/index";
+import { dataUser, dataProduct, dataProductStat, dataTransaction } from "../data/index";
 import { Product } from "../models/Product";
 import { ProductStat } from "../models/ProductStat";
+import { Transaction } from "../models/Transaction";
 
 // USAR FUNÇÕES SÓ UMA VEZ PARA POVOAR BANCO
 
@@ -72,6 +73,32 @@ export const insertProductStats = async () => {
       productStatsConverted
     );
     return { productStats };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    }
+  }
+};
+
+export const insertTransactions = async () => {
+  try {
+    const transactionsCollection = await Transaction;
+
+    const transactionsConverted = dataTransaction.map((transaction) => {
+      const { _id: _, ...transactionWithoutId } = transaction;
+      const transactionWithConvertedId = {
+        _id: new ObjectId(transaction._id),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        ...transactionWithoutId,
+      };
+      return transactionWithConvertedId;
+    });
+
+    const transactions = await transactionsCollection.insertMany(
+      transactionsConverted
+    );
+    return { transactions };
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message };

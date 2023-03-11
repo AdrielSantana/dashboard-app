@@ -35,7 +35,7 @@ const DataGridSkeleton = ({ rows, collums }: Props) => {
   const rangeOfCollums = range(1, collums);
 
   return (
-    <TableContainer h={"100%"} as={Box}>
+    <TableContainer overflowY={"visible"} h={"100%"} as={Box}>
       <Table size="md" colorScheme={"teal"} h={"100%"} variant="striped">
         <TableCaption zIndex={1} position="sticky" bg={bgColor} bottom={0}>
           <Flex
@@ -79,7 +79,7 @@ const DataGridSkeleton = ({ rows, collums }: Props) => {
             </Flex>
           </Flex>
         </TableCaption>
-        <Thead position="sticky" bg={bgColor} top={0}>
+        <Thead zIndex={1} position="sticky" bg={bgColor} top={0}>
           <Tr>
             {rangeOfCollums.map((collum) => {
               return (
