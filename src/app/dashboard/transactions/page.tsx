@@ -1,7 +1,7 @@
 "use client";
 
-import DataGrid from "@/client/components/custumers/DataGrid";
-import DataGridSkeleton from "@/client/components/custumers/DataGridSkeleton";
+import DataGrid from "@/client/components/layout/DataGrid";
+import DataGridSkeleton from "@/client/components/layout/DataGridSkeleton";
 import ErrorMessage from "@/client/components/layout/ErrorMessage";
 import Header from "@/client/components/layout/Header";
 import { fetchTransactions } from "@/client/services/api";
