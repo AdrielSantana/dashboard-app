@@ -1,6 +1,6 @@
 import {
+  getCustomersResponse,
   ProductWithStatsType,
-  UserWithoutPassword,
 } from "@/server/controllers/client";
 import { UserType } from "@/server/models/User";
 
@@ -26,13 +26,15 @@ export const fetchProducts: () => Promise<
   return products;
 };
 
-export const fetchCustomers: () => Promise<
-  UserWithoutPassword[]
-> = async () => {
+export const fetchCustomers: (
+  page: number,
+  pageSize: number,
+  sort: string | null
+) => Promise<getCustomersResponse> = async (page, pageSize, sort) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/customers`,
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/customers?page=${page}&pageSize=${pageSize}&sort=${sort}`,
     { next: { revalidate: 30 }, method: "GET" }
   );
-  const customers: UserWithoutPassword[] = await res.json();
+  const customers: getCustomersResponse = await res.json();
   return customers;
 };

@@ -1,6 +1,12 @@
 import useColors from "@/client/assets/useColors";
 import useDesktopMediaQuery from "@/client/assets/useDesktopMediaQuery";
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
+import { UserWithoutPassword } from "@/server/controllers/client";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from "@chakra-ui/icons";
 import {
   Table,
   Thead,
@@ -14,30 +20,66 @@ import {
   Flex,
   Text,
   IconButton,
+  Button,
+  Input,
+  RadioGroup,
+  Radio,
+  Stack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   data: any[];
+  total: number;
   collums: {
     field: string;
     headerName: string;
+    renderCell?: (params: string) => string;
   }[];
+
+  tablePage: number;
+  setTablePage: Dispatch<SetStateAction<number>>;
+
+  rowsPerPage: number;
+  setRowsPerPage: Dispatch<SetStateAction<number>>;
+
+  sortType: string;
+  setSortType: Dispatch<SetStateAction<string>>;
 };
 
-const DataGrid = ({ data, collums }: Props) => {
-  const [tablePage, setTablePage] = useState<number>(1);
-
+const DataGrid = ({
+  data,
+  total,
+  collums,
+  tablePage,
+  setTablePage,
+  rowsPerPage,
+  setRowsPerPage,
+  sortType,
+  setSortType,
+}: Props) => {
   const { isNonMobile } = useDesktopMediaQuery();
-  const { bgColor } = useColors();
+  const { bgColor, color } = useColors();
 
-  const maxItemsPerPage = 50;
-  const itemsTotal = data.length;
-  const lastTablePage = Math.ceil(itemsTotal / maxItemsPerPage);
-  const dataToShow = data.slice(
-    maxItemsPerPage * (tablePage - 1),
-    maxItemsPerPage * tablePage - 1
-  );
+  const lastTablePage = Math.ceil(total / rowsPerPage);
+
+  const handleRadioChange = (value: number) => {
+    setRowsPerPage(value);
+
+    const newLastTablePage: number = Math.ceil(total / value);
+
+    if (newLastTablePage < lastTablePage && tablePage >= newLastTablePage) {
+      setTablePage(newLastTablePage);
+    }
+  };
+
+  const handleSortChange = (sort: string) => {
+    if (sort === sortType) {
+      setSortType("_id");
+    } else {
+      setSortType(sort);
+    }
+  };
 
   const handleChangeTablePage = (jump: number) => {
     const navBetweenPages =
@@ -49,22 +91,44 @@ const DataGrid = ({ data, collums }: Props) => {
   };
 
   return (
-    <TableContainer as={Box} overflowY={"auto"} maxH={"100%"}>
-      <Table size="md" colorScheme={"teal"} variant="striped">
-        <TableCaption h={"50px"} position="sticky" bg={bgColor} bottom={0}>
+    <TableContainer h={"100%"} as={Box} overflowY={"auto"}>
+      <Table size="md" colorScheme={"teal"} h={"100%"} variant="striped">
+        <TableCaption position="sticky" bg={bgColor} bottom={0}>
           <Flex
             h={"100%"}
             alignItems={"center"}
             justifyContent={"space-between"}
             direction={isNonMobile ? "row" : "row-reverse"}
           >
-            <Text fontSize={"md"}>
-              Itens Por Página: {maxItemsPerPage} / {itemsTotal}
-            </Text>
             <Flex alignItems={"center"} gap={5}>
-              <Text fontSize={"lg"}>
-                Página: {tablePage} / {lastTablePage}
+              <Text fontSize={"lg"}>Itens Por Página:</Text>
+
+              <RadioGroup
+                onChange={(e) => {
+                  handleRadioChange(parseFloat(e));
+                  console.log(parseFloat(e));
+                }}
+                value={rowsPerPage.toString()}
+              >
+                <Stack direction="row">
+                  <Radio value="20">20</Radio>
+                  <Radio value="50">50</Radio>
+                </Stack>
+              </RadioGroup>
+
+              <Text color={color} fontSize={"lg"}>
+                |
               </Text>
+              <Text fontSize={"lg"}>{total}</Text>
+            </Flex>
+            <Flex alignItems={"center"} gap={5}>
+              <Text fontSize={"lg"}>Página:</Text>
+              <Text fontSize={"lg"}>{tablePage}</Text>
+              <Text color={color} fontSize={"lg"}>
+                |
+              </Text>
+
+              <Text fontSize={"lg"}> {lastTablePage}</Text>
               <IconButton
                 aria-label="left-table"
                 colorScheme={"teal"}
@@ -88,17 +152,42 @@ const DataGrid = ({ data, collums }: Props) => {
         </TableCaption>
 
         <Thead position="sticky" bg={bgColor} top={0}>
-          {collums.map((collum) => {
-            return <Th key={collum.field}>{collum.headerName}</Th>;
-          })}
+          <Tr>
+            {collums.map((collum) => {
+              return (
+                <Th key={collum.field}>
+                  <Button
+                    _hover={{ textDecoration: "none" }}
+                    variant={"link"}
+                    rightIcon={
+                      sortType === collum.field ? (
+                        <ChevronDownIcon boxSize={5} />
+                      ) : (
+                        <ChevronUpIcon boxSize={5} />
+                      )
+                    }
+                    onClick={(e) => {
+                      handleSortChange(collum.field);
+                    }}
+                  >
+                    {collum.headerName}
+                  </Button>
+                </Th>
+              );
+            })}
+          </Tr>
         </Thead>
 
         <Tbody>
-          {dataToShow.map((obj) => {
+          {data.map((obj) => {
             return (
               <Tr key={obj._id}>
                 {collums.map((collum) => {
-                  return <Td key={collum.field}>{obj[collum.field]}</Td>;
+                  let cell = obj[collum.field];
+                  if (collum.renderCell) {
+                    cell = collum.renderCell(obj[collum.field]);
+                  }
+                  return <Td key={collum.field}>{cell}</Td>;
                 })}
               </Tr>
             );

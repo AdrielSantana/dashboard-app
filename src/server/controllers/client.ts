@@ -70,19 +70,38 @@ export type ProductWithStatsType = {
   };
 };
 
-export const getCustomers = async () => {
+export const getCustomers = async (
+  page: number | null,
+  pageSize: number | null,
+  sort: string | null
+) => {
   try {
-    const userCollection = await User;
-    const customers = await userCollection
-      .find({ role: "user" }, { projection: { password: 0 } })
-      .toArray();
+    if (page && pageSize && sort) {
+      const userCollection = await User;
+      const customers = await userCollection
+        .find(
+          { role: "user" },
+          { projection: { password: 0 }, sort: { [sort]: 1 } }
+        )
+        .skip((page - 1) * pageSize)
+        .limit(pageSize)
+        .toArray();
 
-    return customers;
+      const total = await userCollection.countDocuments({ role: "user" });
+
+      return { total, customers };
+    } else {
+    }
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message };
     }
   }
+};
+
+export type getCustomersResponse = {
+  total: number;
+  customers: UserWithoutPassword[];
 };
 
 export type UserWithoutPassword = {

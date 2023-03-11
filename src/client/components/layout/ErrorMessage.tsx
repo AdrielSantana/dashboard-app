@@ -2,7 +2,7 @@ import { Heading } from '@chakra-ui/react'
 
 const ErrorMessage = () => {
   return (
-    <Heading>Ops, algo deu errado</Heading>
+    <Heading mt={20} textAlign={"center"}>Ops, algo deu errado</Heading>
   )
 }
 
