@@ -29,7 +29,7 @@ type Props = {
 
 const DataGridSkeleton = ({ rows, collums }: Props) => {
   const { isNonMobile } = useDesktopMediaQuery();
-  const { bgColor, color } = useColors();
+  const { bgColor, colors } = useColors();
 
   const rangeOfRows = range(1, rows);
   const rangeOfCollums = range(1, collums);
@@ -46,13 +46,13 @@ const DataGridSkeleton = ({ rows, collums }: Props) => {
           >
             <Flex alignItems={"center"} gap={5}>
               <Text fontSize={"lg"}>Itens Por Página:</Text>
-              <RadioGroup>
+              <RadioGroup isDisabled>
                 <Stack direction="row">
                   <Radio value="20">20</Radio>
                   <Radio value="50">50</Radio>
                 </Stack>
               </RadioGroup>
-              <Text color={color} fontSize={"lg"}>
+              <Text color={colors.primary} fontSize={"lg"}>
                 {" "}
                 |{" "}
               </Text>
@@ -61,19 +61,23 @@ const DataGridSkeleton = ({ rows, collums }: Props) => {
             <Flex alignItems={"center"} gap={5}>
               <Text fontSize={"lg"}>Página: </Text>
               <Skeleton w="20px" h="25px" />
-              <Text color={color} fontSize={"lg"}>|</Text>
+              <Text color={colors.primary} fontSize={"lg"}>
+                |
+              </Text>
               <Skeleton w="20px" h="25px" />
 
               <IconButton
                 aria-label="left-table"
                 colorScheme={"teal"}
                 variant={"ghost"}
+                isDisabled
                 icon={<ArrowLeftIcon boxSize={5} />}
               />
               <IconButton
                 aria-label="right-table"
                 colorScheme={"teal"}
                 variant={"ghost"}
+                isDisabled
                 icon={<ArrowRightIcon boxSize={5} />}
               />
             </Flex>

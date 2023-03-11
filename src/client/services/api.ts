@@ -1,62 +1,71 @@
 import {
   getCustomersResponse,
   getTransactionsResponse,
-  ProductWithStatsType,
+  getUserResponse,
+  getProductsResponse,
+  getGeographyResponse,
 } from "@/server/controllers/client";
-import { UserType } from "@/server/models/User";
 
-export const fetchUser: (userId: string) => Promise<UserType> = async (
+export const fetchUser: (userId: string) => Promise<getUserResponse> = async (
   userId: string
 ) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/user/${userId}`,
     { next: { revalidate: 30 }, method: "GET" }
   );
-  const user: UserType = await res.json();
+  const user: getUserResponse = await res.json();
   return user;
 };
 
-export const fetchProducts: () => Promise<
-  ProductWithStatsType[]
-> = async () => {
+export const fetchProducts: (
+  search: string
+) => Promise<getProductsResponse> = async (search) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/products`,
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/products?search=${search}`,
     { next: { revalidate: 30 }, method: "GET" }
   );
-  const products: ProductWithStatsType[] = await res.json();
+  const products: getProductsResponse = await res.json();
   return products;
+};
+
+export const fetchGeography: () => Promise<getGeographyResponse> = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/geography`,
+    { next: { revalidate: 30 }, method: "GET" }
+  );
+  const geography: getGeographyResponse = await res.json();
+  return geography;
 };
 
 export const fetchCustomers: (
   page: number,
   pageSize: number,
-  sort: string | null
-) => Promise<getCustomersResponse | undefined> = async (
-  page,
-  pageSize,
-  sort
-) => {
+  sort: string,
+  search: string
+) => Promise<getCustomersResponse> = async (page, pageSize, sort, search) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/customers?page=${page}&pageSize=${pageSize}&sort=${sort}`,
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/customers?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
     { next: { revalidate: 30 }, method: "GET" }
   );
-  const customers: getCustomersResponse | undefined = await res.json();
+  const customers: getCustomersResponse = await res.json();
   return customers;
 };
 
 export const fetchTransactions: (
   page: number,
   pageSize: number,
-  sort: string | null
-) => Promise<getTransactionsResponse | undefined> = async (
+  sort: string,
+  search: string
+) => Promise<getTransactionsResponse> = async (
   page,
   pageSize,
-  sort
+  sort,
+  search
 ) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/transactions?page=${page}&pageSize=${pageSize}&sort=${sort}`,
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/transactions?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
     { next: { revalidate: 30 }, method: "GET" }
   );
-  const transactions: getTransactionsResponse | undefined = await res.json();
+  const transactions: getTransactionsResponse = await res.json();
   return transactions;
 };

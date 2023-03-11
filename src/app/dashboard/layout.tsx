@@ -7,7 +7,6 @@ import { Flex, useDisclosure } from "@chakra-ui/react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { bgColor } = useColors();
-  const { isNonMobile } = useDesktopMediaQuery();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

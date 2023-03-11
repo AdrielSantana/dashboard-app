@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 const SkeletonProductCard = () => {
-  const { cardBgColor, bgColor, color } = useColors();
+  const { cardBgColor, bgColor, colors } = useColors();
   const { isNonMobile } = useDesktopMediaQuery();
 
   return (
@@ -35,7 +35,7 @@ const SkeletonProductCard = () => {
           size="70px"
           thickness="10px"
           value={40}
-          color={color}
+          color={colors.primary}
           trackColor={bgColor}
           isIndeterminate
         />

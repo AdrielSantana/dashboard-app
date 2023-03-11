@@ -1,7 +1,12 @@
 import { NextRequest } from "next/server";
 import { User } from "../models/User";
 import { ObjectId } from "mongodb";
-import { dataUser, dataProduct, dataProductStat, dataTransaction } from "../data/index";
+import {
+  dataUser,
+  dataProduct,
+  dataProductStat,
+  dataTransaction,
+} from "../data/index";
 import { Product } from "../models/Product";
 import { ProductStat } from "../models/ProductStat";
 import { Transaction } from "../models/Transaction";
@@ -25,7 +30,7 @@ export const insertUsers = async () => {
     return { user };
   } catch (error) {
     if (error instanceof Error) {
-      return { error: error.message };
+      return { error: error.message, status: false };
     }
   }
 };
@@ -49,7 +54,7 @@ export const insertProducts = async () => {
     return { products };
   } catch (error) {
     if (error instanceof Error) {
-      return { error: error.message };
+      return { error: error.message, status: false };
     }
   }
 };
@@ -75,7 +80,7 @@ export const insertProductStats = async () => {
     return { productStats };
   } catch (error) {
     if (error instanceof Error) {
-      return { error: error.message };
+      return { error: error.message, status: false };
     }
   }
 };
@@ -98,10 +103,10 @@ export const insertTransactions = async () => {
     const transactions = await transactionsCollection.insertMany(
       transactionsConverted
     );
-    return { transactions };
+    return { transactions, status: true };
   } catch (error) {
     if (error instanceof Error) {
-      return { error: error.message };
+      return { error: error.message, status: false };
     }
   }
 };

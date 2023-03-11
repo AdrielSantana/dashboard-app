@@ -1,40 +1,16 @@
 "use client";
 
-import DataGrid from "@/client/components/layout/DataGrid";
-import DataGridSkeleton from "@/client/components/layout/DataGridSkeleton";
+import DataGrid from "@/client/components/layout/dataGrid/DataGrid";
+import DataGridSkeleton from "@/client/components/layout/dataGrid/DataGridSkeleton";
 import ErrorMessage from "@/client/components/layout/ErrorMessage";
 import Header from "@/client/components/layout/Header";
+import { transactionCollums } from "@/client/constants/collums";
 import { fetchTransactions } from "@/client/services/api";
 import usePageStore from "@/client/state/usePageStore";
+import useSearchStore from "@/client/state/useSearchStore";
 import { Flex } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-
-export const collums = [
-  {
-    field: "_id",
-    headerName: "ID",
-  },
-  {
-    field: "userId",
-    headerName: "User ID",
-  },
-  {
-    field: "createdAt",
-    headerName: "Criado Em",
-  },
-  {
-    field: "products",
-    headerName: "# De Produtos",
-    renderCell: (params: []) => params.length.toString(),
-    disableSort: true,
-  },
-  {
-    field: "cost",
-    headerName: "Custo",
-    renderCell: (params: number) => `$${params.toFixed(2)}`,
-  },
-];
 
 const TransactionsPage = () => {
   const { setPage } = usePageStore();
@@ -42,24 +18,39 @@ const TransactionsPage = () => {
   const [tablePage, setTablePage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(20);
   const [sortType, setSortType] = useState<string>("_id");
+  const { search, usedSearch, setUsedSearch } = useSearchStore();
 
   useEffect(() => {
     setPage("transactions");
   }, [setPage]);
 
   const { data, isLoading, isError, isSuccess } = useQuery({
-    queryKey: ["transactions", tablePage, rowsPerPage, sortType],
-    queryFn: () => fetchTransactions(tablePage, rowsPerPage, sortType),
+    queryKey: [
+      "transactions",
+      tablePage,
+      rowsPerPage,
+      sortType,
+      search,
+      usedSearch,
+    ],
+    queryFn: () => {
+      if (usedSearch) {
+        setTablePage(1);
+      }
+      setUsedSearch(false);
+
+      return fetchTransactions(tablePage, rowsPerPage, sortType, search);
+    },
   });
 
   return (
     <Flex overflowY={"auto"} h={"100%"} pb={6} gap={"6"} direction={"column"}>
       <Header title="Transações" subTitle="Lista de Transações" />
-      {isSuccess && data != undefined && (
+      {isSuccess && data.status && (
         <DataGrid
           data={data.transactions}
           total={data.total}
-          collums={collums}
+          collums={transactionCollums}
           tablePage={tablePage}
           setTablePage={setTablePage}
           rowsPerPage={rowsPerPage}
@@ -69,7 +60,7 @@ const TransactionsPage = () => {
         />
       )}
       {isLoading && <DataGridSkeleton rows={10} collums={5} />}
-      {isError || (isSuccess && data == undefined && <ErrorMessage />)}
+      {isError || (data?.status == false && <ErrorMessage />)}
     </Flex>
   );
 };

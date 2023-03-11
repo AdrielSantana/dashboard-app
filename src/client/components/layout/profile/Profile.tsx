@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CgProfile } from "react-icons/cg";
 
 const Profile = () => {
-  const { color } = useColors();
+  const { colors } = useColors();
   const { userId } = useUserStore();
   const { data, isSuccess } = useQuery({
     queryKey: ["user"],
@@ -16,16 +16,19 @@ const Profile = () => {
 
   return (
     <HStack gap={2}>
-      <Icon boxSize={12} as={CgProfile} color={color} />
+      <Icon boxSize={12} as={CgProfile} color={colors.primary} />
       <Stack w={"5rem"} maxW={"10rem"} gap={3} spacing={0}>
         <Skeleton maxW={"10rem"} h={"15px"} isLoaded={isSuccess}>
           <Text fontSize={"lg"} fontWeight={400} noOfLines={1}>
-            {data?.name}
+            {data?.status && data?.user.name}
+            {data?.status == false && <>Erro</>}
           </Text>
         </Skeleton>
+
         <Skeleton w={"5rem"} maxW={"10rem"} h={"15px"} isLoaded={isSuccess}>
           <Text fontSize={"sm"} fontWeight={400} noOfLines={1}>
-            {data?.occupation}
+            {data?.status && data?.user.occupation}
+            {data?.status == false && <>Erro</>}
           </Text>
         </Skeleton>
       </Stack>

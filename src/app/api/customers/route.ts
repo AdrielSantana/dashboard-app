@@ -20,6 +20,12 @@ export async function GET(req: NextRequest) {
     sort = sortParam;
   }
 
-  const customers = await getCustomers(page, pageSize, sort);
+  const searchParam: string | null = req.nextUrl.searchParams.get("search");
+  let search: string | null = null;
+  if (searchParam) {
+    search = searchParam;
+  }
+
+  const customers = await getCustomers(page, pageSize, sort, search);
   return NextResponse.json(customers);
 }

@@ -11,7 +11,6 @@ import {
   Flex,
   Heading,
   Icon,
-  Stack,
 } from "@chakra-ui/react";
 
 import { AiFillHome } from "react-icons/ai";

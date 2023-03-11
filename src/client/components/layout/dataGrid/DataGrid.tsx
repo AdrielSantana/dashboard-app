@@ -1,6 +1,5 @@
 import useColors from "@/client/assets/useColors";
 import useDesktopMediaQuery from "@/client/assets/useDesktopMediaQuery";
-import { UserWithoutPassword } from "@/server/controllers/client";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -60,9 +59,10 @@ const DataGrid = ({
   setSortType,
 }: Props) => {
   const { isNonMobile } = useDesktopMediaQuery();
-  const { bgColor, color } = useColors();
+  const { bgColor, colors } = useColors();
 
-  const lastTablePage = Math.ceil(total / rowsPerPage);
+  const lastTablePage: number =
+    Math.ceil(total / rowsPerPage) == 0 ? 1 : Math.ceil(total / rowsPerPage);
 
   const handleRadioChange = (value: number) => {
     setRowsPerPage(value);
@@ -119,7 +119,7 @@ const DataGrid = ({
                 </Stack>
               </RadioGroup>
 
-              <Text color={color} fontSize={"lg"}>
+              <Text color={colors.primary} fontSize={"lg"}>
                 |
               </Text>
               <Text fontSize={"lg"}>{total}</Text>
@@ -127,7 +127,7 @@ const DataGrid = ({
             <Flex alignItems={"center"} gap={5}>
               <Text fontSize={"lg"}>Página:</Text>
               <Text fontSize={"lg"}>{tablePage}</Text>
-              <Text color={color} fontSize={"lg"}>
+              <Text color={colors.primary} fontSize={"lg"}>
                 |
               </Text>
 

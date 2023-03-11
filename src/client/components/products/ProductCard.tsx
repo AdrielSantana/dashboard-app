@@ -22,7 +22,7 @@ type Props = {
 };
 
 const ProductCard = ({ product }: Props) => {
-  const { cardBgColor, bgColor, color } = useColors();
+  const { cardBgColor, bgColor, colors } = useColors();
   const { isNonMobile } = useDesktopMediaQuery();
 
   const convertedRating = convertRatingToPercentage(product.rating);
@@ -42,11 +42,11 @@ const ProductCard = ({ product }: Props) => {
         >
           <Flex justifyContent={"space-between"} alignItems={"center"}>
             <Stack>
-              <Text color={color} fontSize={"md"}>
+              <Text color={colors.primary} fontSize={"md"}>
                 {product.category}
               </Text>
               <Text fontSize={"lg"}>{product.name}</Text>
-              <Text fontWeight={600} color={color}>
+              <Text fontWeight={600} color={colors.primary}>
                 $ {product.price}
               </Text>
             </Stack>
@@ -57,7 +57,7 @@ const ProductCard = ({ product }: Props) => {
               size="70px"
               thickness="10px"
               value={convertedRating}
-              color={color}
+              color={colors.primary}
               trackColor={bgColor}
             >
               <CircularProgressLabel>{convertedRating}%</CircularProgressLabel>
