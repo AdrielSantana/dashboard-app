@@ -5,6 +5,7 @@ import { ProductStat } from "../models/ProductStat";
 import { Transaction } from "../models/Transaction";
 import { User, UserType } from "../models/User";
 import getCountryISO3 from "country-iso-2-to-3";
+import { OverallStat, OverallStatType } from "../models/OverallStat";
 
 export const getUser = async (req: NextRequest, params: { id: string }) => {
   try {
@@ -296,5 +297,23 @@ export type getTransactionsResponse = {
     createdAt: Date;
     updatedAt: Date;
   }[];
+  status: boolean;
+};
+
+export const getSales = async () => {
+  try {
+    const overallStatsCollection = await OverallStat;
+    const overallStats = await overallStatsCollection.findOne();
+
+    return { overallStats, status: true };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message, status: false };
+    }
+  }
+};
+
+export type getSalesResponse = {
+  overallStats: OverallStatType;
   status: boolean;
 };

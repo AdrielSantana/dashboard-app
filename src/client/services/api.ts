@@ -4,6 +4,7 @@ import {
   getUserResponse,
   getProductsResponse,
   getGeographyResponse,
+  getSalesResponse,
 } from "@/server/controllers/client";
 
 export const fetchUser: (userId: string) => Promise<getUserResponse> = async (
@@ -68,4 +69,13 @@ export const fetchTransactions: (
   );
   const transactions: getTransactionsResponse = await res.json();
   return transactions;
+};
+
+export const fetchSales: () => Promise<getSalesResponse> = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/sales`, {
+    next: { revalidate: 30 },
+    method: "GET",
+  });
+  const sales: getSalesResponse = await res.json();
+  return sales;
 };

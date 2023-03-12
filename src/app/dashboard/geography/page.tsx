@@ -12,28 +12,20 @@ import { useEffect } from "react";
 
 const GeographyPage = () => {
   const { setPage } = usePageStore();
-  const { bgColor } = useColors();
 
   useEffect(() => {
     setPage("geography");
   }, [setPage]);
 
   const { data, isLoading, isError, isSuccess } = useQuery({
-    queryKey: ["customers"],
+    queryKey: ["geography"],
     queryFn: () => {
       return fetchGeography();
     },
   });
 
   return (
-    <Flex
-      overflow={"auto"}
-      h={"100%"}
-      bgColor={bgColor}
-      pb={6}
-      gap={"8"}
-      direction={"column"}
-    >
+    <Flex overflow={"hidden"} h={"100%"} pb={6} gap={"8"} direction={"column"}>
       <Header title="Geografia" subTitle="Mapa dos Usuários" />
       {isLoading && <GeographyMap data={[]} />}
       {isError || (data?.status == false && <ErrorMessage />)}

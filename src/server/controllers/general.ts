@@ -6,10 +6,12 @@ import {
   dataProduct,
   dataProductStat,
   dataTransaction,
+  dataOverallStat,
 } from "../data/index";
 import { Product } from "../models/Product";
 import { ProductStat } from "../models/ProductStat";
 import { Transaction } from "../models/Transaction";
+import { OverallStat } from "../models/OverallStat";
 
 // USAR FUNÇÕES SÓ UMA VEZ PARA POVOAR BANCO
 
@@ -104,6 +106,38 @@ export const insertTransactions = async () => {
       transactionsConverted
     );
     return { transactions, status: true };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message, status: false };
+    }
+  }
+};
+
+export const insertOverallStats = async () => {
+  try {
+    const overallStatsCollection = await OverallStat;
+
+    const overallStatsConverted = dataOverallStat.map((overallStat) => {
+      const {
+        _id: _,
+        createdAt,
+        updatedAt,
+        ...overallStatWithoutIdAndStringDates
+      } = overallStat;
+
+      const overallStatWithConvertedIdAndDates = {
+        _id: new ObjectId(overallStat._id),
+        createdAt: new Date(createdAt),
+        updatedAt: new Date(updatedAt),
+        ...overallStatWithoutIdAndStringDates,
+      };
+      return overallStatWithConvertedIdAndDates;
+    });
+
+    const overallStats = await overallStatsCollection.insertMany(
+      overallStatsConverted
+    );
+    return { overallStats, status: true };
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message, status: false };

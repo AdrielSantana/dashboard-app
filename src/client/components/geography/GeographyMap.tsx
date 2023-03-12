@@ -1,8 +1,9 @@
 import React from "react";
-import { ResponsiveChoropleth } from "@nivo/geo";
+import { Choropleth } from "@nivo/geo";
 import { geoData } from "@/client/constants/geo-data";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import useColors from "@/client/assets/useColors";
+import useDesktopMediaQuery from "@/client/assets/useDesktopMediaQuery";
 
 type Props = {
   data: {
@@ -13,6 +14,7 @@ type Props = {
 
 const GeographyMap = ({ data }: Props) => {
   const { bgAltColor, colors, bgColor } = useColors();
+  const { isNonMobile } = useDesktopMediaQuery();
 
   let maxDomain = 0;
   data.forEach(({ id, value }) => {
@@ -20,9 +22,17 @@ const GeographyMap = ({ data }: Props) => {
   });
 
   return (
-    <Box overflow={"auto"} h={"100%"}>
-      <ResponsiveChoropleth
+    <Flex
+      alignItems={"center"}
+      justifyContent={"center"}
+      overflow={"auto"}
+      w={"100%"}
+      h={"100%"}
+    >
+      <Choropleth
         data={data}
+        width={1280}
+        height={720}
         theme={{
           axis: {
             domain: { line: { stroke: colors.primary } },
@@ -44,7 +54,7 @@ const GeographyMap = ({ data }: Props) => {
           },
         }}
         features={geoData.features}
-        margin={{ top: 0, right: 0, bottom: 0, left: 50 }}
+        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
         colors={[
           colors.quaternary,
           colors.primary,
@@ -55,8 +65,8 @@ const GeographyMap = ({ data }: Props) => {
         unknownColor={bgAltColor}
         label="properties.name"
         valueFormat=".2s"
-        projectionScale={150}
-        projectionTranslation={[0.45, 0.6]}
+        projectionScale={isNonMobile ? 150 : 130}
+        projectionTranslation={isNonMobile ? [0.5, 0.6] : [0.65, 0.6]}
         projectionRotation={[0, 0, 0]}
         borderWidth={1.5}
         borderColor={bgColor}
@@ -65,7 +75,7 @@ const GeographyMap = ({ data }: Props) => {
             anchor: "bottom-right",
             direction: "column",
             justify: true,
-            translateX: -50,
+            translateX: 0,
             translateY: 0,
             itemsSpacing: 0,
             itemWidth: 100,
@@ -86,7 +96,7 @@ const GeographyMap = ({ data }: Props) => {
           },
         ]}
       />
-    </Box>
+    </Flex>
   );
 };
 
