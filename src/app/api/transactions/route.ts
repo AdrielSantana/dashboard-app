@@ -26,6 +26,6 @@ export async function GET(req: NextRequest) {
     search = searchParam;
   }
 
-  const customers = await getTransactions(page, pageSize, sort, search);
-  return NextResponse.json(customers);
+  const transactions = await getTransactions(page, pageSize, sort, search);
+  return NextResponse.json(transactions);
 }

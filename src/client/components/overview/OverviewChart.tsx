@@ -26,8 +26,6 @@ const OverviewChart = ({ isDashboard = false, view }: Props) => {
   const [totalSalesLine, totalUnitsLine] = useMemo(() => {
     if (!data?.overallStats) return [];
 
-    console.log("memo fn");
-
     const { monthlyData } = data.overallStats;
 
     const totalSalesLine = {
