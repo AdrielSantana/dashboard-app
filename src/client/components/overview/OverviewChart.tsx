@@ -5,7 +5,6 @@ import { fetchSales } from "@/client/services/api";
 import { useQuery } from "@tanstack/react-query";
 import useColors from "@/client/assets/useColors";
 import ErrorMessage from "../layout/ErrorMessage";
-import { Box } from "@chakra-ui/react";
 import useDesktopMediaQuery from "@/client/assets/useDesktopMediaQuery";
 
 type Props = {
@@ -65,6 +64,7 @@ const OverviewChart = ({ isDashboard = false, view }: Props) => {
 
   if (isLoading)
     return (
+      
       <ResponsiveLine
         data={[]}
         colors={[colors.primary, colors.secondary]}

@@ -59,7 +59,7 @@ const TransactionsPage = () => {
           setSortType={setSortType}
         />
       )}
-      {isLoading && <DataGridSkeleton rows={10} collums={5} />}
+      {isLoading && <DataGridSkeleton rows={20} collums={5} />}
       {isError || (data?.status == false && <ErrorMessage />)}
     </Flex>
   );

@@ -14,7 +14,7 @@ const OverviewPage = () => {
   }, [setPage]);
 
   return (
-    <Flex overflow={"auto"} h={"100%"} pb={6} gap={"8"} direction={"column"}>
+    <Flex pb={6} gap={"8"} direction={"column"}>
       <Header title="Vendas" subTitle="Total de Vendas" />
       <Overview />
     </Flex>

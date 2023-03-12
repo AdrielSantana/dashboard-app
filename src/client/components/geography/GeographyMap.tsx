@@ -25,9 +25,8 @@ const GeographyMap = ({ data }: Props) => {
     <Flex
       alignItems={"center"}
       justifyContent={"center"}
-      overflow={"auto"}
-      w={"100%"}
-      h={"100%"}
+      overflowX={"auto"}
+      overflowY={"hidden"}
     >
       <Choropleth
         data={data}
@@ -49,7 +48,7 @@ const GeographyMap = ({ data }: Props) => {
           },
           tooltip: {
             container: {
-              color: colors.primary,
+              color: "#212121",
             },
           },
         }}

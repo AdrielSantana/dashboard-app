@@ -25,7 +25,7 @@ const GeographyPage = () => {
   });
 
   return (
-    <Flex overflow={"hidden"} h={"100%"} pb={6} gap={"8"} direction={"column"}>
+    <Flex pb={6} gap={"8"} direction={"column"}>
       <Header title="Geografia" subTitle="Mapa dos Usuários" />
       {isLoading && <GeographyMap data={[]} />}
       {isError || (data?.status == false && <ErrorMessage />)}

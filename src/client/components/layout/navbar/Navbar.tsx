@@ -4,6 +4,7 @@ import { Flex, HStack, IconButton, Spacer } from "@chakra-ui/react";
 import SearchBar from "./SearchBar";
 import UserOptions from "../profile/UserOptions";
 import useDesktopMediaQuery from "@/client/assets/useDesktopMediaQuery";
+import useColors from "@/client/assets/useColors";
 
 type Props = {
   onOpen: () => void;
@@ -11,9 +12,20 @@ type Props = {
 
 const Navbar = ({ onOpen }: Props) => {
   const { isNonMobile } = useDesktopMediaQuery();
+  const { bgColor } = useColors();
 
   return (
-    <Flex py={5} gap={5} justifyContent="center" flexWrap={"wrap"} width="100%">
+    <Flex
+      pos={"sticky"}
+      top={0}
+      zIndex={1}
+      py={5}
+      gap={5}
+      justifyContent="center"
+      bgColor={bgColor}
+      flexWrap={"wrap"}
+      width="100%"
+    >
       <HStack gap={3}>
         <IconButton
           colorScheme="teal"
