@@ -1,7 +1,7 @@
 "use client";
 import useColors from "@/client/assets/useColors";
 import { fetchUser } from "@/client/services/api";
-import useUserStore from "@/client/state/useUserStorage";
+import useUserStore from "@/client/state/useUserStore";
 import { HStack, Icon, Text, Stack, Skeleton } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { CgProfile } from "react-icons/cg";

@@ -76,43 +76,97 @@ export type getAdminsResponse = {
 };
 
 export const getUserPerformance = async (
-  req: NextRequest,
-  params: { id: string }
+  params: { id: string },
+  page: number | null,
+  pageSize: number | null,
+  sort: string | null,
+  search: string | null
 ) => {
   try {
+    if (!page) {
+      page = 1;
+    }
+
+    if (!pageSize) {
+      pageSize = 20;
+    }
+
+    if (!sort) {
+      sort = "_id";
+    }
+
+    if (!search) {
+      search = "";
+    }
+
     const id = params.id;
     const convertedId = new ObjectId(id);
     const userCollection = await User;
-    const userWithStats = await userCollection
-      .aggregate([
-        { $match: { _id: convertedId } },
-        {
-          $lookup: {
-            from: "affiliateStats",
-            localField: "_id",
-            foreignField: "userId",
-            as: "affiliateStats",
+
+    const transactions = await userCollection.aggregate([
+      { $match: { _id: convertedId } },
+      {
+        $lookup: {
+          from: "affiliateStats",
+          localField: "_id",
+          foreignField: "userId",
+          as: "affiliateStats",
+        },
+      },
+      {
+        $lookup: {
+          from: "transactions",
+          localField: "affiliateStats.affiliateSales",
+          foreignField: "_id",
+          as: "affiliateStats.transactions",
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: { transaction: "$affiliateStats.transactions" },
+        },
+      },
+      {
+        $project: {
+          transaction: {
+            $filter: {
+              input: "$transaction",
+              as: "t",
+              cond: {
+                $or: [
+                  {
+                    $regexMatch: {
+                      input: "$$t.userId",
+                      regex: new RegExp(search, "i"),
+                    },
+                  },
+                  { $gte: ["$$t.cost", parseFloat(search)] },
+                ],
+              },
+            },
           },
         },
-        { $unwind: "$affiliateStats" },
-      ])
+      },
+      { $unwind: "$transaction" },
+      { $sort: { [`transaction.${sort}`]: 1 } },
+    ]);
+
+    const totalCursor = transactions.clone();
+
+    const total = (await totalCursor.toArray()).length;
+
+    const transactionsPaged = await transactions
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .toArray();
 
-    const transactionsCollection = await Transaction;
-
-    const saleTransactions = await Promise.all(
-      userWithStats[0].affiliateStats.affiliateSales.map((id: ObjectId) => {
-        return transactionsCollection.findOne({ _id: id });
-      })
-    );
-
-    const filteredSaleTransactions = saleTransactions.filter((transaction) => {
-      return transaction !== null;
+    const transactionsPagedFormmated = transactionsPaged.map((transaction) => {
+      return transaction.transaction;
     });
 
     return {
-      user: userWithStats[0],
-      sales: filteredSaleTransactions,
+      sales: transactionsPagedFormmated,
+      total: total,
       status: true,
     };
   } catch (error) {
@@ -123,6 +177,14 @@ export const getUserPerformance = async (
 };
 
 export type getUserPerformanceResponse = {
-  user: UserType;
+  sales: {
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+    userId: string;
+    cost: number;
+    products: string[];
+  }[];
+  total: number;
   status: boolean;
 };

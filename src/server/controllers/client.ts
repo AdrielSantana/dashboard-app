@@ -80,13 +80,12 @@ export const getProducts = async (search: string | null) => {
 
     const products = await productsCollection
       .aggregate([
-        { $addFields: { priceStr: { $toString: "$price" } } },
         {
           $match: {
             $or: [
               { name: { $regex: new RegExp(search, "i") } },
               { category: { $regex: new RegExp(search, "i") } },
-              { priceStr: { $regex: new RegExp(search, "i") } },
+              { price: { $gte: parseFloat(search) } },
             ],
           },
         },
@@ -258,12 +257,11 @@ export const getTransactions = async (
 
     const transactions = await transactionCollection
       .aggregate([
-        { $addFields: { costStr: { $toString: "$cost" } } },
         {
           $match: {
             $or: [
               { userId: { $regex: new RegExp(search, "i") } },
-              { costStr: { $regex: new RegExp(search, "i") } },
+              { cost: { $gte: parseFloat(search) } },
             ],
           },
         },
@@ -276,7 +274,7 @@ export const getTransactions = async (
     const total = await transactionCollection.countDocuments({
       $or: [
         { userId: { $regex: new RegExp(search, "i") } },
-        { costStr: { $regex: new RegExp(search, "i") } },
+        { cost: { $gte: parseFloat(search) } },
       ],
     });
 

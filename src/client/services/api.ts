@@ -6,7 +6,7 @@ import {
   getGeographyResponse,
   getSalesResponse,
 } from "@/server/controllers/client";
-import { getAdminsResponse } from "@/server/controllers/management";
+import { getAdminsResponse, getUserPerformanceResponse } from "@/server/controllers/management";
 
 export const fetchUser: (userId: string) => Promise<getUserResponse> = async (
   userId: string
@@ -93,4 +93,25 @@ export const fetchAdmins: (
   );
   const admins: getAdminsResponse = await res.json();
   return admins;
+};
+
+export const fetchUserPerformance: (
+  userId: string,
+  page: number,
+  pageSize: number,
+  sort: string,
+  search: string
+) => Promise<getUserPerformanceResponse> = async (
+  userId,
+  page,
+  pageSize,
+  sort,
+  search
+) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/performance/${userId}?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
+    { next: { revalidate: 60 }, method: "GET" }
+  );
+  const userPerformance: getUserPerformanceResponse = await res.json();
+  return userPerformance;
 };
