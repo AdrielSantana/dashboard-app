@@ -20,15 +20,15 @@ const Profile = () => {
       <Stack w={"5rem"} maxW={"10rem"} gap={3} spacing={0}>
         <Skeleton maxW={"10rem"} h={"15px"} isLoaded={isSuccess}>
           <Text fontSize={"lg"} fontWeight={400} noOfLines={1}>
-            {data?.status && data?.user.name}
-            {data?.status == false && <>Erro</>}
+            {data?.status == true && data?.user.name}
+            {data?.status == false && <>Error</>}
           </Text>
         </Skeleton>
 
         <Skeleton w={"5rem"} maxW={"10rem"} h={"15px"} isLoaded={isSuccess}>
           <Text fontSize={"sm"} fontWeight={400} noOfLines={1}>
-            {data?.status && data?.user.occupation}
-            {data?.status == false && <>Erro</>}
+            {data?.status == true && data?.user.occupation}
+            {data?.status == false && <>Error</>}
           </Text>
         </Skeleton>
       </Stack>

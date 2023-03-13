@@ -1,7 +1,9 @@
 "use client";
 
+import Header from "@/client/components/layout/Header";
+import Monthly from "@/client/components/montly/Monthly";
 import usePageStore from "@/client/state/usePageStore";
-import { Heading } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 
 const MonthlyPage = () => {
@@ -11,9 +13,10 @@ const MonthlyPage = () => {
     setPage("monthly");
   }, [setPage]);
   return (
-    <>
-      <Heading>Monthly Page</Heading>
-    </>
+    <Flex pb={6} gap={"8"} direction={"column"}>
+      <Header title="Vendas Mensais" subTitle="Total de Vendas Mensais" />
+      <Monthly />
+    </Flex>
   );
 };
 

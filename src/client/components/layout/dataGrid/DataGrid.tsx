@@ -58,7 +58,7 @@ const DataGrid = ({
   setSortType,
 }: Props) => {
   const { isNonMobile } = useDesktopMediaQuery();
-  const { bgColor, colors } = useColors();
+  const { bgColor, colors, bgAltColor } = useColors();
 
   const lastTablePage: number =
     Math.ceil(total / rowsPerPage) == 0 ? 1 : Math.ceil(total / rowsPerPage);
@@ -113,8 +113,12 @@ const DataGrid = ({
                 value={rowsPerPage.toString()}
               >
                 <Stack direction="row">
-                  <Radio value="20">20</Radio>
-                  <Radio value="50">50</Radio>
+                  <Radio borderColor={bgAltColor} value="20">
+                    20
+                  </Radio>
+                  <Radio borderColor={bgAltColor} value="50">
+                    50
+                  </Radio>
                 </Stack>
               </RadioGroup>
 

@@ -15,7 +15,7 @@ const OverviewPage = () => {
 
   return (
     <Flex pb={6} gap={"8"} direction={"column"}>
-      <Header title="Vendas" subTitle="Total de Vendas" />
+      <Header title="Visão Geral" subTitle="Total de Vendas" />
       <Overview />
     </Flex>
   );

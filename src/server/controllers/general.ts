@@ -7,11 +7,13 @@ import {
   dataProductStat,
   dataTransaction,
   dataOverallStat,
+  dataAffiliateStat,
 } from "../data/index";
 import { Product } from "../models/Product";
 import { ProductStat } from "../models/ProductStat";
 import { Transaction } from "../models/Transaction";
 import { OverallStat } from "../models/OverallStat";
+import { AffiliateStats } from "../models/AffiliateStat";
 
 // USAR FUNÇÕES SÓ UMA VEZ PARA POVOAR BANCO
 
@@ -138,6 +140,44 @@ export const insertOverallStats = async () => {
       overallStatsConverted
     );
     return { overallStats, status: true };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message, status: false };
+    }
+  }
+};
+
+export const insertAffiliateStats = async () => {
+  try {
+    const affiliateStatsCollection = await AffiliateStats;
+
+    const affiliateStatsConverted = dataAffiliateStat.map((affiliateStat) => {
+      const {
+        _id: _,
+        userId,
+        affiliateSales,
+        ...affiliateStatWithoutId
+      } = affiliateStat;
+
+      const affiliateSalesConverted = affiliateSales.map((affiliateSale) => {
+        return new ObjectId(affiliateSale);
+      });
+
+      const affiliateStatWithConvertedId = {
+        _id: new ObjectId(affiliateStat._id),
+        affiliateSales: affiliateSalesConverted,
+        userId: new ObjectId(userId),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        ...affiliateStatWithoutId,
+      };
+      return affiliateStatWithConvertedId;
+    });
+
+    const affiliateStats = await affiliateStatsCollection.insertMany(
+      affiliateStatsConverted
+    );
+    return { affiliateStats, status: true };
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message, status: false };
