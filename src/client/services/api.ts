@@ -1,12 +1,18 @@
 import {
   getCustomersResponse,
   getTransactionsResponse,
-  getUserResponse,
   getProductsResponse,
   getGeographyResponse,
   getSalesResponse,
 } from "@/server/controllers/client";
-import { getAdminsResponse, getUserPerformanceResponse } from "@/server/controllers/management";
+import {
+  getDashboardDataResponse,
+  getUserResponse,
+} from "@/server/controllers/general";
+import {
+  getAdminsResponse,
+  getUserPerformanceResponse,
+} from "@/server/controllers/management";
 
 export const fetchUser: (userId: string) => Promise<getUserResponse> = async (
   userId: string
@@ -115,3 +121,13 @@ export const fetchUserPerformance: (
   const userPerformance: getUserPerformanceResponse = await res.json();
   return userPerformance;
 };
+
+export const fetchDashboardData: () => Promise<getDashboardDataResponse> =
+  async () => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/dashboard`,
+      { next: { revalidate: 60 }, method: "GET" }
+    );
+    const dashboardData: getDashboardDataResponse = await res.json();
+    return dashboardData;
+  };

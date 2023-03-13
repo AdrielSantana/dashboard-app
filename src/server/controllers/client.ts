@@ -1,30 +1,9 @@
-import { ObjectId } from "mongodb";
-import { NextRequest } from "next/server";
 import { Product } from "../models/Product";
 import { ProductStat } from "../models/ProductStat";
 import { Transaction } from "../models/Transaction";
-import { User, UserType } from "../models/User";
+import { User } from "../models/User";
 import getCountryISO3 from "country-iso-2-to-3";
 import { OverallStat, OverallStatType } from "../models/OverallStat";
-
-export const getUser = async (req: NextRequest, params: { id: string }) => {
-  try {
-    const id = params.id;
-    const convertedId = new ObjectId(id);
-    const userCollection = await User;
-    const user = await userCollection.findOne({ _id: convertedId });
-    return { user, status: true };
-  } catch (error) {
-    if (error instanceof Error) {
-      return { error: error.message, status: false };
-    }
-  }
-};
-
-export type getUserResponse = {
-  user: UserType;
-  status: boolean;
-};
 
 export const getGeography = async () => {
   try {
