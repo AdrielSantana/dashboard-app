@@ -17,10 +17,10 @@ import {
 export const fetchUser: (userId: string) => Promise<getUserResponse> = async (
   userId: string
 ) => {
-  const res = await fetch(
-    `${process.env.VERCEL_URL}/api/user/${userId}`,
-    { next: { revalidate: 60 }, method: "GET" }
-  );
+  const res = await fetch(`/api/user/${userId}`, {
+    next: { revalidate: 60 },
+    method: "GET",
+  });
   const user: getUserResponse = await res.json();
   return user;
 };
@@ -28,19 +28,19 @@ export const fetchUser: (userId: string) => Promise<getUserResponse> = async (
 export const fetchProducts: (
   search: string
 ) => Promise<getProductsResponse> = async (search) => {
-  const res = await fetch(
-    `${process.env.VERCEL_URL}/api/products?search=${search}`,
-    { next: { revalidate: 60 }, method: "GET" }
-  );
+  const res = await fetch(`/api/products?search=${search}`, {
+    next: { revalidate: 60 },
+    method: "GET",
+  });
   const products: getProductsResponse = await res.json();
   return products;
 };
 
 export const fetchGeography: () => Promise<getGeographyResponse> = async () => {
-  const res = await fetch(
-    `${process.env.VERCEL_URL}/api/geography`,
-    { next: { revalidate: 60 }, method: "GET" }
-  );
+  const res = await fetch(`/api/geography`, {
+    next: { revalidate: 60 },
+    method: "GET",
+  });
   const geography: getGeographyResponse = await res.json();
   return geography;
 };
@@ -52,7 +52,7 @@ export const fetchCustomers: (
   search: string
 ) => Promise<getCustomersResponse> = async (page, pageSize, sort, search) => {
   const res = await fetch(
-    `${process.env.VERCEL_URL}/api/customers?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
+    `/api/customers?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
     { next: { revalidate: 60 }, method: "GET" }
   );
   const customers: getCustomersResponse = await res.json();
@@ -71,7 +71,7 @@ export const fetchTransactions: (
   search
 ) => {
   const res = await fetch(
-    `${process.env.VERCEL_URL}/api/transactions?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
+    `/api/transactions?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
     { next: { revalidate: 60 }, method: "GET" }
   );
   const transactions: getTransactionsResponse = await res.json();
@@ -79,7 +79,7 @@ export const fetchTransactions: (
 };
 
 export const fetchSales: () => Promise<getSalesResponse> = async () => {
-  const res = await fetch(`${process.env.VERCEL_URL}/api/sales`, {
+  const res = await fetch(`/api/sales`, {
     next: { revalidate: 60 },
     method: "GET",
   });
@@ -94,7 +94,7 @@ export const fetchAdmins: (
   search: string
 ) => Promise<getAdminsResponse> = async (page, pageSize, sort, search) => {
   const res = await fetch(
-    `${process.env.VERCEL_URL}/api/admins?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
+    `/api/admins?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
     { next: { revalidate: 60 }, method: "GET" }
   );
   const admins: getAdminsResponse = await res.json();
@@ -115,7 +115,7 @@ export const fetchUserPerformance: (
   search
 ) => {
   const res = await fetch(
-    `${process.env.VERCEL_URL}/api/performance/${userId}?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
+    `/api/performance/${userId}?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${search}`,
     { next: { revalidate: 60 }, method: "GET" }
   );
   const userPerformance: getUserPerformanceResponse = await res.json();
@@ -124,10 +124,10 @@ export const fetchUserPerformance: (
 
 export const fetchDashboardData: () => Promise<getDashboardDataResponse> =
   async () => {
-    const res = await fetch(
-      `${process.env.VERCEL_URL}/api/dashboard`,
-      { next: { revalidate: 60 }, method: "GET" }
-    );
+    const res = await fetch(`/api/dashboard`, {
+      next: { revalidate: 60 },
+      method: "GET",
+    });
     const dashboardData: getDashboardDataResponse = await res.json();
     return dashboardData;
   };
