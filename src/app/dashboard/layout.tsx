@@ -2,7 +2,7 @@
 import useColors from "@/client/assets/useColors";
 import Navbar from "@/client/components/layout/navbar/Navbar";
 import Sidebar from "@/client/components/layout/sidebar/Sidebar";
-import { Box, Flex, useDisclosure } from "@chakra-ui/react";
+import { Flex, useDisclosure } from "@chakra-ui/react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { bgColor } = useColors();
