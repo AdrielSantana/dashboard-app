@@ -52,11 +52,19 @@ const BreakdownChart = ({ isDashboard = false }: Props) => {
     },
   });
 
+  const breakDownColors = [
+    colors.quaternary,
+    colors.secondary,
+    colors.secondary,
+    colors.quaternary,
+  ];
+
   const formattedData = (data: Record<string, number>) => {
-    return Object.entries(data).map(([category, sales]) => ({
+    return Object.entries(data).map(([category, sales], i) => ({
       id: category,
       label: category,
       value: sales,
+      color: breakDownColors[i],
     }));
   };
 
@@ -101,7 +109,7 @@ const BreakdownChart = ({ isDashboard = false }: Props) => {
                 },
               },
             }}
-            colors={{ scheme: "dark2" }}
+            colors={{ datum: "data.color" }}
             margin={
               isDashboard
                 ? { top: 30, right: 30, bottom: 30, left: 40 }

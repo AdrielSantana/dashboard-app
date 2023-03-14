@@ -2,7 +2,11 @@ import useColors from "@/client/assets/useColors";
 import { ResponsiveLine } from "@nivo/line";
 import React from "react";
 
-const ResponsiveLineSkeleton = () => {
+const ResponsiveLineSkeleton = ({
+  isDashboard = false,
+}: {
+  isDashboard?: boolean;
+}) => {
   const { bgAltColor } = useColors();
 
   return (
@@ -46,7 +50,7 @@ const ResponsiveLineSkeleton = () => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 90,
-        legend: "Mês",
+        legend: isDashboard ? "" : "Mês",
         legendOffset: 60,
         legendPosition: "middle",
       }}
@@ -54,7 +58,7 @@ const ResponsiveLineSkeleton = () => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: "Total",
+        legend: isDashboard ? "" : "Total",
         legendOffset: -50,
         legendPosition: "middle",
       }}

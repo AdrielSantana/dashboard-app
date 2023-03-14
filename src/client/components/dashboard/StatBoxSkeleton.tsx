@@ -15,13 +15,13 @@ const StatBoxSkeleton = () => {
   const { isNonMediumScreens } = useDesktopMediaQuery();
 
   return (
-    <GridItem rowSpan={1} colSpan={2} w="100%" h="100%">
-      <Card
-        p={isNonMediumScreens ? 0 : 4}
-        bg={cardBgColor}
-        w="100%"
-        h={isNonMediumScreens ? "100%" : "300px"}
-      >
+    <GridItem
+      rowSpan={1}
+      colSpan={isNonMediumScreens ? 2 : 12}
+      w="100%"
+      h="100%"
+    >
+      <Card p={isNonMediumScreens ? 0 : 4} bg={cardBgColor} w="100%" h={"100%"}>
         <CardBody>
           <Flex h={"100%"} direction={"column"} justifyContent="space-between">
             <Flex alignItems={"center"} justifyContent="space-between">

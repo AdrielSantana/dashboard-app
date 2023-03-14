@@ -61,14 +61,15 @@ const OverviewChart = ({ isDashboard = false, view }: Props) => {
     return [[totalSalesLine], [totalUnitsLine]];
   }, [data, colors]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (isLoading) return <ResponsiveLineSkeleton />;
+  if (isLoading) return <ResponsiveLineSkeleton isDashboard={isDashboard} />;
   if (data?.status == false || isError) return <ErrorMessage />;
   return (
     <>
       {isSuccess && data.status && (
         <ResponsiveLine
           data={view === "sales" ? totalSalesLine! : totalUnitsLine!}
-          colors={{ scheme: "dark2" }}
+          colors={view == "sales" ? [colors.secondary] : [colors.quaternary]}
+          enableArea={isDashboard}
           theme={{
             axis: {
               domain: { line: { stroke: bgAltColor } },
@@ -115,6 +116,7 @@ const OverviewChart = ({ isDashboard = false, view }: Props) => {
             legendPosition: "middle",
           }}
           axisLeft={{
+            tickValues: 5,
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,

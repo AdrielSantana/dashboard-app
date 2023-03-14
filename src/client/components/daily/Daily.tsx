@@ -106,7 +106,7 @@ const Daily = () => {
           {isSuccess && data.status && (
             <ResponsiveLine
               data={formattedData!}
-              colors={{ scheme: "dark2" }}
+              colors={[colors.secondary, colors.quaternary]}
               theme={{
                 axis: {
                   domain: { line: { stroke: bgAltColor } },
@@ -149,6 +149,7 @@ const Daily = () => {
                 legendPosition: "middle",
               }}
               axisLeft={{
+                tickValues: 5,
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,

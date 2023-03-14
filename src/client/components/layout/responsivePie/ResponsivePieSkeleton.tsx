@@ -8,7 +8,7 @@ const ResponsivePieSkeleton = ({
 }: {
   isDashboard?: boolean;
 }) => {
-  const { bgAltColor } = useColors();
+  const { bgAltColor, colors } = useColors();
   return (
     <Box
       minH={isDashboard ? "400px" : "600px"}
@@ -21,26 +21,25 @@ const ResponsivePieSkeleton = ({
             id: "",
             label: " ",
             value: 1,
+            color: colors.quaternary,
           },
           {
             id: "  ",
             label: "  ",
             value: 2,
+            color: colors.secondary,
           },
           {
             id: "   ",
             label: "   ",
             value: 3,
+            color: colors.quaternary,
           },
           {
             id: "    ",
             label: "    ",
             value: 4,
-          },
-          {
-            id: "     ",
-            label: "     ",
-            value: 5,
+            color: colors.secondary,
           },
         ]}
         theme={{
@@ -63,7 +62,7 @@ const ResponsivePieSkeleton = ({
             },
           },
         }}
-        colors={{ scheme: "dark2" }}
+        colors={{ datum: "data.color" }}
         margin={
           isDashboard
             ? { top: 30, right: 30, bottom: 30, left: 40 }

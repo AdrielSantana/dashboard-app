@@ -71,7 +71,7 @@ const GeographyMap = ({ data }: Props) => {
         borderColor={bgColor}
         legends={[
           {
-            anchor: "bottom-right",
+            anchor: "top-right",
             direction: "column",
             justify: true,
             translateX: 0,
