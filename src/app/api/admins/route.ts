@@ -1,4 +1,3 @@
-import { insertAffiliateStats } from "@/server/controllers/general";
 import { getAdmins } from "@/server/controllers/management";
 import { NextRequest, NextResponse } from "next/server";
 
