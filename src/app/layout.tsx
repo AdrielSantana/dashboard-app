@@ -1,5 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
+import { Analytics } from '@vercel/analytics/react';
 
 import { CacheProvider } from "@chakra-ui/next-js";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -26,6 +27,7 @@ export default function RootLayout({
             <ChakraProvider theme={theme}>{children}</ChakraProvider>
           </CacheProvider>
         </QueryClientProvider>
+        <Analytics/>
       </body>
     </html>
   );
