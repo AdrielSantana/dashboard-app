@@ -60,7 +60,7 @@ const Monthly = () => {
         minW={"320px"}
         maxW={"1920px"}
       >
-        {isLoading || !data && <ResponsiveLineSkeleton />}
+        {isLoading && <ResponsiveLineSkeleton />}
         {data?.status == false || (isError && <ErrorMessage />)}
         {isSuccess && data.status && (
           <ResponsiveLine

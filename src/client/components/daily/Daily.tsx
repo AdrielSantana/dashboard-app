@@ -101,7 +101,7 @@ const Daily = () => {
           </Box>
         </Flex>
         <Box h={isNonMobile ? "750px" : "500px"}>
-          {isLoading || (!data && <ResponsiveLineSkeleton />)}
+          {isLoading && <ResponsiveLineSkeleton />}
           {data?.status == false || (isError && <ErrorMessage />)}
           {isSuccess && data.status && (
             <ResponsiveLine

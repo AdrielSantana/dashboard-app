@@ -52,7 +52,7 @@ const CustomersPage = () => {
           setSortType={setSortType}
         />
       )}
-      {isLoading || (!data && <DataGridSkeleton rows={20} collums={7} />)}
+      {isLoading && <DataGridSkeleton rows={20} collums={7} />}
       {isError || (data?.status == false && <ErrorMessage />)}
     </Flex>
   );
