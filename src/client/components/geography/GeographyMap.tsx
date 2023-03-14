@@ -17,7 +17,7 @@ const GeographyMap = ({ data }: Props) => {
   const { isNonMobile } = useDesktopMediaQuery();
 
   let maxDomain = 0;
-  if (data.length > 0) {
+  if (data) {
     data.forEach(({ id, value }) => {
       maxDomain = value > maxDomain ? value : maxDomain;
     });
