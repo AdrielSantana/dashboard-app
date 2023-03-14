@@ -29,7 +29,7 @@ const ProductsPage = () => {
   return (
     <Flex h={"100%"} pb={6} gap={"12"} direction={"column"}>
       <Header title={"Produtos"} subTitle={"Veja sua lista de produtos"} />
-      {isError || (data?.status == false && <ErrorMessage />)}
+      {(isError || data?.status == false) && <ErrorMessage />}
       {isLoading && <SkeletonProductCardGroup numberOfCards={6} />}
       {isSuccess && data.status && data.products.length > 0 && (
         <ProductCardGroup products={data.products} />

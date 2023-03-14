@@ -53,7 +53,7 @@ const AdminPage = () => {
         />
       )}
       {isLoading && <DataGridSkeleton rows={20} collums={5} />}
-      {isError || (data?.status == false && <ErrorMessage />)}
+      {(isError || data?.status == false) && <ErrorMessage />}
     </Flex>
   );
 };

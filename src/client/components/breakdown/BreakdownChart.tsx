@@ -70,7 +70,7 @@ const BreakdownChart = ({ isDashboard = false }: Props) => {
 
   return (
     <>
-      {isError || (data?.status == false && <ErrorMessage />)}
+      {(isError || data?.status == false) && <ErrorMessage />}
       {isLoading && <ResponsivePieSkeleton />}
       {isSuccess && data?.status == true && (
         <Box

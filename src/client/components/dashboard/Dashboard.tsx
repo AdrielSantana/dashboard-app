@@ -86,7 +86,7 @@ const Dashboard = () => {
           </Grid>
         </>
       )}
-      {isError || (data?.status == false && <ErrorMessage />)}
+      {(isError || data?.status == false) && <ErrorMessage />}
       {isSuccess && data.status == true && (
         <>
           <Grid
