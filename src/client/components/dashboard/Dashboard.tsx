@@ -53,6 +53,7 @@ const Dashboard = () => {
             <GridItem colSpan={isNonMediumScreens ? 8 : 12} rowSpan={2}>
               <Card p={0} bg={cardBgColor} w="100%" h={"100%"}>
                 <CardBody overflow={"hidden"}>
+                  <Heading></Heading>
                   <OverviewChart view="sales" isDashboard />
                 </CardBody>
               </Card>
@@ -76,9 +77,6 @@ const Dashboard = () => {
             >
               <Card bg={cardBgColor} w="100%" h={"100%"}>
                 <VStack justifyContent={"center"} h={"100%"}>
-                  <Heading size={"lg"} textAlign={"center"}>
-                    Vendas Por Categoria
-                  </Heading>
                   <BreakdownChart isDashboard />
                 </VStack>
               </Card>
@@ -119,7 +117,12 @@ const Dashboard = () => {
             <GridItem colSpan={isNonMediumScreens ? 8 : 12} rowSpan={2}>
               <Card p={0} bg={cardBgColor} w="100%" h={"100%"}>
                 <CardBody overflow={"hidden"}>
-                  <OverviewChart view="sales" isDashboard />
+                  <VStack justifyContent={"center"} h={"100%"}>
+                    <Heading size={"lg"} textAlign={"center"}>
+                      Vendas Por Categoria
+                    </Heading>
+                    <OverviewChart view="sales" isDashboard />
+                  </VStack>
                 </CardBody>
               </Card>
             </GridItem>
