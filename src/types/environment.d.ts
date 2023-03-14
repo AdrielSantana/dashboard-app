@@ -5,7 +5,7 @@ declare global {
     interface ProcessEnv {
       MONGODB_URI: string;
       DB_NAME: string;
-      NEXT_PUBLIC_VERCEL_URL: string;
+      PUBLIC_URL: string;
     }
   }
 }
