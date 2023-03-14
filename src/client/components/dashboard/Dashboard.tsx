@@ -32,7 +32,7 @@ const Dashboard = () => {
   const { colors, bgAltColor, bgColor, cardBgColor } = useColors();
 
   const { data, isLoading, isError, isSuccess } = useQuery({
-    queryKey: ["geography"],
+    queryKey: ["dashboard"],
     queryFn: () => {
       return fetchDashboardData();
     },
