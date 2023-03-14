@@ -71,7 +71,7 @@ const BreakdownChart = ({ isDashboard = false }: Props) => {
   return (
     <>
       {isError || (data?.status == false && <ErrorMessage />)}
-      {isLoading && <ResponsivePieSkeleton />}
+      {isLoading || (!data && <ResponsivePieSkeleton />)}
       {isSuccess && data?.status == true && (
         <Box
           minH={isDashboard ? "400px" : "600px"}

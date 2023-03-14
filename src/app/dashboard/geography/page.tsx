@@ -3,7 +3,6 @@
 import GeographyMap from "@/client/components/geography/GeographyMap";
 import ErrorMessage from "@/client/components/layout/ErrorMessage";
 import Header from "@/client/components/layout/Header";
-import { skeletonData } from "@/client/constants/geo-data";
 import { fetchGeography } from "@/client/services/api";
 import usePageStore from "@/client/state/usePageStore";
 import { Flex } from "@chakra-ui/react";
@@ -27,7 +26,7 @@ const GeographyPage = () => {
   return (
     <Flex pb={6} gap={"8"} direction={"column"}>
       <Header title="Geografia" subTitle="Mapa dos Usuários" />
-      {isLoading && <GeographyMap data={skeletonData} />}
+      {isLoading || !data && <GeographyMap data={[{ id: "BRA", value: 0 }]} />}
       {isError || (data?.status == false && <ErrorMessage />)}
       {isSuccess && data.status == true && (
         <GeographyMap data={data.formattedLocations} />

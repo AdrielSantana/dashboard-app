@@ -67,7 +67,7 @@ const AdminPage = () => {
           setSortType={setSortType}
         />
       )}
-      {isLoading && <DataGridSkeleton rows={20} collums={5} />}
+      {isLoading || (!data && <DataGridSkeleton rows={20} collums={5} />)}
       {isError || (data?.status == false && <ErrorMessage />)}
     </Flex>
   );
