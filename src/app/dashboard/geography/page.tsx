@@ -26,7 +26,8 @@ const GeographyPage = () => {
   return (
     <Flex pb={6} gap={"8"} direction={"column"}>
       <Header title="Geografia" subTitle="Mapa dos Usuários" />
-      {isLoading || !data && <GeographyMap data={[{ id: "BRA", value: 0 }]} />}
+      {isLoading ||
+        (!data && <GeographyMap data={[{ id: "BRA", value: 0 }]} />)}
       {isError || (data?.status == false && <ErrorMessage />)}
       {isSuccess && data.status == true && (
         <GeographyMap data={data.formattedLocations} />

@@ -39,7 +39,7 @@ const AdminPage = () => {
   return (
     <Flex overflowY={"auto"} h={"100%"} pb={6} gap={"6"} direction={"column"}>
       <Header title="Administração" subTitle="Lista de Administração" />
-      {isSuccess && data.status && (
+      {isSuccess && data.status == true && (
         <DataGrid
           data={data.admins}
           total={data.total}
