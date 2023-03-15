@@ -56,7 +56,7 @@ const LoginCard = () => {
     }
   }, [user, router]);
   return (
-    <Card p={8} bgColor={cardBgColor} w={"500px"}>
+    <Card p={8} bgColor={cardBgColor} mx={5} w={"500px"}>
       <CardHeader as={Flex} justifyContent={"center"}>
         <Logo />
       </CardHeader>
