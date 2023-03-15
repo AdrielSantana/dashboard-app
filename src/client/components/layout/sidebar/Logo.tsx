@@ -5,7 +5,7 @@ import { HStack, Heading } from "@chakra-ui/react";
 const Logo = () => {
   return (
     <HStack gap={3}>
-      <Image alt="Logo" src={"public/images/logo.svg"} width={40} height={40} />
+      <Image alt="Logo" src={"/public/images/logo.svg"} width={40} height={40} />
       <Heading size={"lg"}>Dashboard</Heading>
     </HStack>
   );

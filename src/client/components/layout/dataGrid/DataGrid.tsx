@@ -230,13 +230,13 @@ const DataGrid = ({
   console.log(tablePage);
 
   const SSRCondition =
-    SSR &&
-    setTablePage &&
-    tablePage &&
-    rowsPerPage &&
-    setRowsPerPage &&
-    sortType &&
-    setSortType &&
+    SSR == true &&
+    setTablePage != undefined &&
+    tablePage != undefined &&
+    rowsPerPage != undefined &&
+    setRowsPerPage != undefined &&
+    sortType != undefined &&
+    setSortType != undefined &&
     total != undefined;
   if (SSRCondition) {
     const lastTablePage: number =
