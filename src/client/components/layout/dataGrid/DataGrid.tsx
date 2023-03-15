@@ -227,6 +227,8 @@ const DataGrid = ({
     );
   }
 
+  console.log(tablePage);
+
   const SSRCondition =
     SSR &&
     setTablePage &&
@@ -235,8 +237,7 @@ const DataGrid = ({
     setRowsPerPage &&
     sortType &&
     setSortType &&
-    total;
-
+    total != undefined;
   if (SSRCondition) {
     const lastTablePage: number =
       Math.ceil(total / rowsPerPage) == 0 ? 1 : Math.ceil(total / rowsPerPage);

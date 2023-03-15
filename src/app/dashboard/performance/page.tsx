@@ -7,7 +7,7 @@ import Header from "@/client/components/layout/Header";
 import { fetchUserPerformance } from "@/client/services/api";
 import usePageStore from "@/client/state/usePageStore";
 import useSearchStore from "@/client/state/useSearchStore";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { transactionCollums } from "@/client/constants/collums";
