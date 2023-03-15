@@ -9,7 +9,7 @@ import theme from "@/client/assets/theme";
 import { checkIsPublicRoute } from "@/client/functions/check-is-public-route";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/client/services/queryClient";
-import PrivateRoute from "./dashboard/PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 export default function RootLayout({
   children,
