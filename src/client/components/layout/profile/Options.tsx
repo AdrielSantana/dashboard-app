@@ -1,10 +1,16 @@
+import useAuth from "@/client/services/useAuth";
 import { MoonIcon, SettingsIcon, SunIcon } from "@chakra-ui/icons";
 import { HStack, IconButton, useColorMode } from "@chakra-ui/react";
 
 import React from "react";
 
-const Options = () => {
+const Options = ({ isLogin = false }: { isLogin?: boolean }) => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const { login } = useAuth();
+
+  const handleFakeLogin = () => {
+    login({ email: "fhartzog5q@wsj.com", password: "Gbu0dgwBqM0" });
+  };
 
   return (
     <HStack gap={3}>
@@ -21,7 +27,7 @@ const Options = () => {
         variant={"ghost"}
         size={"lg"}
         icon={<SettingsIcon />}
-        onClick={(e) => console.log("Open settings")}
+        onClick={(e) => (isLogin ? handleFakeLogin() : console.log("Faço nada"))}
       />
     </HStack>
   );
