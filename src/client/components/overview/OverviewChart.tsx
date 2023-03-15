@@ -104,7 +104,6 @@ const OverviewChart = ({ isDashboard = false, view }: Props) => {
           axisTop={null}
           axisRight={null}
           axisBottom={{
-            tickValues:  isNonMobile ? 12 : 6,
             format: (v) => {
               if (isDashboard || !isNonMobile) return v.slice(0, 3);
               return v;

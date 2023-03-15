@@ -11,6 +11,7 @@ import {
   Flex,
   Heading,
   Icon,
+  HStack,
 } from "@chakra-ui/react";
 
 import { AiFillHome } from "react-icons/ai";
@@ -27,8 +28,10 @@ import { FaGlobeAmericas, FaCashRegister } from "react-icons/fa";
 import { RiFilePaperFill } from "react-icons/ri";
 
 import UserOptions from "../profile/UserOptions";
+import Logo from "./Logo";
 import SidebarButton from "./SidebarButton";
 import SidebarButtonGroup from "./SidebarButtonGroup";
+
 
 const btnGroupClientFacing = [
   {
@@ -104,7 +107,7 @@ const Sidebar = ({ isOpen, onClose }: Props) => {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>
-            <Heading size={"lg"}>Dashboard App</Heading>
+            <Logo/>
           </DrawerHeader>
 
           <DrawerBody px={7}>

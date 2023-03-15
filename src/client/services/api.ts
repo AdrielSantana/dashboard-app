@@ -8,11 +8,13 @@ import {
 import {
   getDashboardDataResponse,
   getUserResponse,
+  userLoginResponse,
 } from "@/server/controllers/general";
 import {
   getAdminsResponse,
   getUserPerformanceResponse,
 } from "@/server/controllers/management";
+import { UserProps } from "./useAuth";
 
 export const fetchUser: (userId: string) => Promise<getUserResponse> = async (
   userId: string
@@ -131,3 +133,17 @@ export const fetchDashboardData: () => Promise<getDashboardDataResponse> =
     const dashboardData: getDashboardDataResponse = await res.json();
     return dashboardData;
   };
+
+export const fetchLogin = async (email: string, password: string) => {
+  const res = await fetch("/api/login", {
+    method: "POST",
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    }),
+    body: JSON.stringify({ email, password }),
+  });
+
+  const user: userLoginResponse = await res.json();
+  return user;
+};

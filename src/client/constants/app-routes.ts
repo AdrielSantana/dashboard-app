@@ -1,11 +1,19 @@
 export const APP_ROUTES = {
   private: {
-    unauthorized: {
-      name: "/unauthorized",
-    },
+    unauthorized: [
+      "/dashboard",
+      "/dashboard/breakdown",
+      "/dashboard/customers",
+      "/dashboard/daily",
+      "/dashboard/monthly",
+      "/dashboard/overview",
+      "/dashboard/products",
+      "/dashboard/transactions",
+      "/dashboard/performance",
+    ],
+    admin: ["/dashboard/admin"],
   },
   public: {
-    index: "/",
-    dashboard: "dashboard",
+    all: ["/"],
   },
 };

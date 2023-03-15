@@ -1,19 +1,20 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { UserProps } from "../services/useAuth";
 
 interface UserState {
-  userId: string;
-  setUser: (id: string) => void;
+  user: UserProps | null;
+  setUser: (user: UserProps | null) => void;
 }
 
 const useUserStore = create<UserState>()(
   persist(
     (set) => ({
-      userId: "63701cc1f03239b7f700000e",
-      setUser: (id: string) => set({ userId: id }),
+      user: null,
+      setUser: (user: UserProps | null) => set({ user: user }),
     }),
     {
-      name: "user-id",
+      name: "user",
     }
   )
 );

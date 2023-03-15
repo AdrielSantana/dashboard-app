@@ -1,3 +1,4 @@
+import useAuth from "@/client/services/useAuth";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   IconButton,
@@ -8,6 +9,8 @@ import {
 } from "@chakra-ui/react";
 
 const ProfileMenu = () => {
+  const { logout } = useAuth();
+
   return (
     <>
       <Menu>
@@ -20,7 +23,7 @@ const ProfileMenu = () => {
         />
         <MenuList>
           <MenuItem>Perfil</MenuItem>
-          <MenuItem>Sair</MenuItem>
+          <MenuItem onClick={(e) => logout()}>Sair</MenuItem>
         </MenuList>
       </Menu>
     </>

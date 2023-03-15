@@ -13,7 +13,7 @@ export async function GET(
     params: ParamsType;
   }
 ) {
-  const user = await getUser(req, params);
+  const user = await getUser(params);
 
   return NextResponse.json(user);
 }

@@ -8,10 +8,10 @@ import { CgProfile } from "react-icons/cg";
 
 const Profile = () => {
   const { colors } = useColors();
-  const { userId } = useUserStore();
+  const { user } = useUserStore();
   const { data, isSuccess } = useQuery({
     queryKey: ["user"],
-    queryFn: () => fetchUser(userId),
+    queryFn: () => fetchUser(user!.id),
   });
 
   return (

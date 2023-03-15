@@ -3,8 +3,9 @@ import { NextRequest } from "next/server";
 import { User, UserType } from "../models/User";
 import { OverallStat } from "../models/OverallStat";
 import { Transaction } from "../models/Transaction";
+import { LoginParamProps, UserProps } from "@/client/services/useAuth";
 
-export const getUser = async (req: NextRequest, params: { id: string }) => {
+export const getUser = async (params: { id: string }) => {
   try {
     const id = params.id;
     const convertedId = new ObjectId(id);
@@ -20,6 +21,36 @@ export const getUser = async (req: NextRequest, params: { id: string }) => {
 
 export type getUserResponse = {
   user: UserType;
+  status: boolean;
+};
+
+export const userLogin = async ({ email, password }: LoginParamProps) => {
+  try {
+    if (!email || !password) {
+      return { status: false };
+    }
+
+    const userCollection = await User;
+    const userRes = await userCollection.findOne({
+      email: email,
+      password: password,
+    });
+
+    let user = null;
+    if (!!userRes) {
+      user = { id: userRes._id, role: userRes.role };
+    }
+
+    return { user, status: true };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message, status: false };
+    }
+  }
+};
+
+export type userLoginResponse = {
+  user: UserProps | null;
   status: boolean;
 };
 

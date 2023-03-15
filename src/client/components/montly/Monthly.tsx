@@ -100,7 +100,6 @@ const Monthly = () => {
             axisTop={null}
             axisRight={null}
             axisBottom={{
-              tickValues: isNonMobile ? 12 : 6,
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 90,
