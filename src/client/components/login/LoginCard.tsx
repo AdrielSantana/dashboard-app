@@ -151,7 +151,7 @@ const LoginCard = () => {
         </CardBody>
       </form>
       <CardFooter as={Flex} justifyContent={"center"}>
-        <Options />
+        <Options isLogin />
       </CardFooter>
     </Card>
   );
