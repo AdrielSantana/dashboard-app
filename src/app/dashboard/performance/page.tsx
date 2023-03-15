@@ -15,7 +15,7 @@ import useUserStore from "@/client/state/useUserStore";
 
 const AdminPage = () => {
   const { setPage } = usePageStore();
-  const { userId } = useUserStore();
+  const { user } = useUserStore();
 
   const [tablePage, setTablePage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(20);
@@ -42,7 +42,7 @@ const AdminPage = () => {
       setUsedSearch(false);
 
       return fetchUserPerformance(
-        userId,
+        user!.id,
         tablePage,
         rowsPerPage,
         sortType,
