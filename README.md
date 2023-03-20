@@ -17,6 +17,8 @@ Projeto para mostrar os dados armazenados no banco de dados.
 
 > Para requisição para os Data Grids foi utilizado Server Side Repagination para apenas requisitar certas partes do banco correspondetes para o front-end, assim diminuindo o peso para o Client.
 
+> Autenticação JWT por meio de tokens e senha criptografada usando Bcrypt.
+
 > Gráficos disponibilizados pela biblioteca Nivo. 
 
 > Utilizei do Next Js e TypeScript para fazer uma forte e concisa armação do front-end em conjunto com o back-end. Estilização e temas dos componentes feito com Chakra-UI.
