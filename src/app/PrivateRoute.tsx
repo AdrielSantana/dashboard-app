@@ -1,23 +1,36 @@
+"use client";
+import { fetchGetUserByToken } from "@/client/services/api";
 import useUserStore from "@/client/state/useUserStore";
-import { redirect, useRouter } from "next/navigation";
-import React, { ReactNode, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import React, { ReactNode, useEffect, useState } from "react";
 
 const PrivateRoute = ({ children }: { children: ReactNode }) => {
   const { user } = useUserStore();
   const router = useRouter();
-
-  const isUserAuthenticated = !!user;
+  const [showPage, setShowPage] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!isUserAuthenticated) {
-      router.push("/");
-    }
-  }, [user, isUserAuthenticated, router]);
+    (async () => {
+      const user = await (await fetchGetUserByToken()).user;
+
+      if (user) {
+        const isUserAuthenticated = ["admin", "superadmin", "user"].includes(
+          user?.role
+        );
+        setShowPage(isUserAuthenticated);
+        if (!isUserAuthenticated) {
+          router.push("/");
+        }
+      } else {
+        router.push("/");
+      }
+    })();
+  }, [user, router, showPage]);
 
   return (
     <>
-      {!isUserAuthenticated && null}
-      {isUserAuthenticated && children}
+      {!showPage && null}
+      {showPage && children}
     </>
   );
 };

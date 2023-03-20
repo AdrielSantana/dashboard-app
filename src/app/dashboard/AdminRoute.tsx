@@ -1,20 +1,36 @@
+"use client";
 import NotAuthorizedMessage from "@/client/components/layout/NotAuthorizedMessage";
+import { fetchGetUserByToken } from "@/client/services/api";
 import useUserStore from "@/client/state/useUserStore";
-import React, { ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import React, { ReactNode, useEffect, useState } from "react";
 
-const PrivateRoute = ({ children }: { children: ReactNode }) => {
+const AdminRoute = ({ children }: { children: ReactNode }) => {
   const { user } = useUserStore();
+  const router = useRouter();
+  const [showPage, setShowPage] = useState<boolean>(false);
 
-  const admins = ["admin", "superadmin"];
+  useEffect(() => {
+    (async () => {
+      const user = await (await fetchGetUserByToken()).user;
 
-  const isUserAdmin = admins.includes(user!.role);
+      if (user) {
+        const isUserAuthenticated = ["admin", "superadmin"].includes(
+          user?.role
+        );
+        setShowPage(isUserAuthenticated);
+      } else {
+        router.push("/");
+      }
+    })();
+  }, [user, router, showPage]);
 
   return (
     <>
-      {!isUserAdmin && <NotAuthorizedMessage />}
-      {isUserAdmin && children}
+      {!showPage && <NotAuthorizedMessage />}
+      {showPage && children}
     </>
   );
 };
 
-export default PrivateRoute;
+export default AdminRoute;

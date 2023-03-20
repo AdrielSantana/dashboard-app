@@ -144,6 +144,25 @@ export const fetchLogin = async (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
   });
 
-  const user: userLoginResponse = await res.json();
+  const token: { token: string; status: boolean } = await res.json();
+  return token;
+};
+
+export const fetchGetUserByToken = async () => {
+  const res = await fetch("/api/auth/token", {
+    method: "GET",
+  });
+
+  const user: { user?: { id: string; role: string }; status: boolean } =
+    await res.json();
+  return user;
+};
+
+export const fetchDeleteUserByToken = async () => {
+  const res = await fetch("/api/auth/token", {
+    method: "DELETE",
+  });
+
+  const user: { status: boolean } = await res.json();
   return user;
 };

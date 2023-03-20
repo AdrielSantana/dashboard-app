@@ -6,6 +6,7 @@ declare global {
       MONGODB_URI: string;
       DB_NAME: string;
       VERCEL_URL: string;
+      JWT_SECRET: string;
     }
   }
 }

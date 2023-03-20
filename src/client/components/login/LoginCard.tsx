@@ -30,10 +30,9 @@ import { SubmitHandler, useForm, Controller } from "react-hook-form";
 
 const LoginCard = () => {
   const { cardBgColor, colors } = useColors();
-
-  const [passwordView, setPasswordView] = useState<boolean>(false);
   const { user } = useUserStore();
-  const { failedLogin, login } = useAuth();
+  const [passwordView, setPasswordView] = useState<boolean>(false);
+  const { failedLogin, login, checkToken } = useAuth();
   const {
     handleSubmit,
     formState: { errors },
@@ -51,10 +50,13 @@ const LoginCard = () => {
   };
 
   useEffect(() => {
-    if (!!user) {
-      router.push("/dashboard");
-    }
-  }, [user, router]);
+    (async () => {
+      const isTokenAuth = await checkToken();
+      if (isTokenAuth) {
+        router.push("/dashboard");
+      }
+    })();
+  }, [router, checkToken, user]);
   return (
     <Card p={8} bgColor={cardBgColor} mx={5} w={"500px"}>
       <CardHeader as={Flex} justifyContent={"center"}>

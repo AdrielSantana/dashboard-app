@@ -4,6 +4,8 @@ import { User, UserType } from "../models/User";
 import { OverallStat } from "../models/OverallStat";
 import { Transaction } from "../models/Transaction";
 import { LoginParamProps, UserProps } from "@/client/services/useAuth";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const getUser = async (params: { id: string }) => {
   try {
@@ -27,21 +29,30 @@ export type getUserResponse = {
 export const userLogin = async ({ email, password }: LoginParamProps) => {
   try {
     if (!email || !password) {
-      return { status: false };
+      return { error: "email ou senha não fornecidos", status: false };
     }
 
     const userCollection = await User;
-    const userRes = await userCollection.findOne({
+    const user = await userCollection.findOne({
       email: email,
-      password: password,
     });
 
-    let user = null;
-    if (!!userRes) {
-      user = { id: userRes._id, role: userRes.role };
+    if (!user) {
+      return { error: "email não encontrado", status: false };
     }
 
-    return { user, status: true };
+    const isUserAuth = await bcrypt.compare(password, user.password);
+
+    if (isUserAuth) {
+      const userTokenValue = { id: user._id.toString(), role: user.role };
+      const token = jwt.sign(userTokenValue, process.env.JWT_SECRET, {
+        expiresIn: 1000 * 60 * 60 * 24 * 2,
+      });
+
+      return { token, status: true };
+    }
+
+    return { error: "senha inválida", status: false };
   } catch (error) {
     if (error instanceof Error) {
       return { error: error.message, status: false };

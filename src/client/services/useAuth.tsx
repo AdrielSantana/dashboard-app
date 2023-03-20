@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { useState } from "react";
 import useUserStore from "../state/useUserStore";
-import { fetchLogin } from "./api";
+import { fetchDeleteUserByToken, fetchGetUserByToken, fetchLogin } from "./api";
 
 export type UserProps = {
   id: string;
@@ -15,24 +15,37 @@ const useAuth = () => {
   const [failedLogin, setFailedLogin] = useState<boolean>(false);
 
   const login = async ({ email, password }: LoginParamProps) => {
-    const response = await fetchLogin(email, password);
+    const responseLogin = await fetchLogin(email, password);
 
-    if (response.user != null) {
-      setUser(response.user);
-      setFailedLogin(false);
+    if (responseLogin.status) {
+      const responseUser = await fetchGetUserByToken();
+
+      if (responseUser.status) {
+        setUser(responseUser.user!);
+        setFailedLogin(false);
+      } else {
+        setFailedLogin(true);
+      }
     } else {
       setFailedLogin(true);
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await fetchDeleteUserByToken();
     setUser(null);
+  };
+
+  const checkToken = async () => {
+    const responseUser = await fetchGetUserByToken();
+    return responseUser.status;
   };
 
   return {
     failedLogin,
     login,
     logout,
+    checkToken
   };
 };
 
