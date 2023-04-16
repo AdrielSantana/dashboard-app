@@ -10,9 +10,10 @@ const DashboardPage = () => {
   return (
     <Flex
       backgroundColor={bgColor}
-      height="100%"
+      minHeight="100%"
       alignItems="center"
       justifyContent="center"
+      py={5}
     >
       <LoginCard />
     </Flex>
