@@ -4,7 +4,7 @@
 
 Projeto para mostrar os dados armazenados no banco de dados.
 
-#### Para melhor visualização, aqui vai o link do site: [Dashboard App](https://dashboard-app-indol.vercel.app)
+#### Para melhor visualização, aqui vai o link do site: [Dashboard App](https://dashboard.adrielsan.pro)
 ### Lista das tecnologias que utilizei:
 
 * TypeScript
